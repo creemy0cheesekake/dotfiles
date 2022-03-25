@@ -1,0 +1,34 @@
+Config { font = "xft:Roboto Mono:pixelsize=12:antialias=true:hinting=true"
+       , additionalFonts = ["xft:Symbols Nerd Font:pixelsize=18:antialias=true:hinting=true"]
+       , bgColor = "#0f1401"
+       , fgColor = "#b389d9"
+       , alpha = 230
+       , position = BottomH 50
+       , textOffset = -1
+       , iconOffset = -1
+       , lowerOnStart = True
+       , pickBroadest = True
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [
+		    Run UnsafeStdinReader
+		    , Run Com "/home/arjun/xmobar-tools/date" [] "date" 10
+		    , Run Com "/home/arjun/xmobar-tools/cpu" [] "cpu" 10
+		    , Run Com "/home/arjun/xmobar-tools/memory" [] "memory" 10
+		    , Run Com "/home/arjun/xmobar-tools/battery" [] "battery" 10
+		    , Run Com "/home/arjun/xmobar-tools/volume" [] "volume" 5
+		    , Run Com "/home/arjun/xmobar-tools/spotify" [] "spotify" 10
+		    , Run Com "/home/arjun/xmobar-tools/pacman-updates" [] "pacman-updates" 600
+		    , Run Com "/home/arjun/xmobar-tools/bluetooth" [] "bluetooth" 10
+		    , Run Com "/home/arjun/xmobar-tools/brightness" [] "brightness" 10
+		    , Run Com "/home/arjun/xmobar-tools/wifi" [] "wifi" 10
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " | <action=`shutdown now`><fn=1></fn></action> | <fc=#254380><fn=1>﬙</fn> %cpu%</fc> | <fc=#5c2c96><fn=1></fn> %memory%</fc> | <fc=#d6b031><fn=1></fn> %brightness%</fc> | }\
+                    \{ <action=`eval $(/home/arjun/xmobar-tools/runPac)` button=1><fc=#f2d95c><fn=1></fn> %pacman-updates%</fc></action> | %spotify% <action=`eval $(alacritty -e 'bluetoothctl' & )`>%bluetooth%</action> | <fc=#2f6d99><fn=1>墳</fn> %volume%</fc> | <fc=#2f806b><fn=1></fn> %wifi%</fc> | <fc=#ab3737><fn=1></fn> %battery%</fc> | <fc=#ee9a00><fn=1></fn> %date%</fc> | "
+}
+
