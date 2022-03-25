@@ -1,12 +1,12 @@
 Config { font = "xft:Roboto Mono:pixelsize=12:antialias=true:hinting=true"
        , additionalFonts = ["xft:Symbols Nerd Font:pixelsize=18:antialias=true:hinting=true"]
-       , bgColor = "#0f1401"
+       , bgColor = "#140e01"
        , fgColor = "#b389d9"
        , alpha = 230
        , position = BottomH 50
        , textOffset = -1
        , iconOffset = -1
-       , lowerOnStart = True
+       , lowerOnStart = False
        , pickBroadest = True
        , persistent = False
        , hideOnStart = False

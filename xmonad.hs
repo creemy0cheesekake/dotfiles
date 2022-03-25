@@ -221,11 +221,11 @@ myLayout = avoidStruts ( smartBorders ( tabbed shrinkText tabConfig ||| tiled ) 
      tabConfig = def {
         fontName = "xft:Roboto Mono:size=7",
         decoHeight = 20,
-        activeColor = "#4e226b",
+        inactiveBorderColor = "#1c1815",
+        activeColor = "#1c1815",
+        inactiveColor = "#121211",
         activeTextColor = "#e5a50a",
         inactiveTextColor = "#e5a50a",
-        inactiveBorderColor = "#4e226b",
-        inactiveColor = "#2b113d",
         activeBorderWidth = 0
     }
 
@@ -273,7 +273,7 @@ myStartupHook = setDefaultCursor xC_left_ptr
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
-  xmproc <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/.xmobarrc"
+  xmproc <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc"
   xmonad $ docks defaults;
 
 -- A structure containing your configuration settings, overriding

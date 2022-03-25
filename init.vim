@@ -56,7 +56,7 @@ Plug 'uiiaoo/java-syntax.vim'
 Plug 'dag/vim-fish'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'rust-lang/rust.vim'
-Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'frazrepo/vim-rainbow'
 Plug 'dahu/vim-fanfingtastic'
 Plug 'aonemd/kuroi.vim'
 Plug 'othree/eregex.vim'
@@ -489,6 +489,18 @@ let g:yats_host_keyword = 1
 syntax enable
 filetype plugin indent on
 
+let g:rainbow_active = 1
+
+let g:rainbow_load_separately = [
+    \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
+    \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
+    \ ]
+
+let g:rainbow_guifgs = ['#a34b60', 'DarkOrange', '#a85bcf', 'FireBrick']
+let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
+
 "*****************************************************************************
 "*****************************************************************************
 
@@ -546,8 +558,8 @@ endif
 "*******************************************
 " js
 "*******************************************
-autocmd BufEnter *.js,*.ts,*.jsx,*.tsx inoremap log <Esc>d3hiconsole.log()<Esc>i
-autocmd BufEnter *.js,*.ts,*.jsx,*.tsx command! R :execute 'w' | :execute '!node %'
+autocmd BufEnter *.js,*.ts,*.jsx,*.tsx inoremap log console.log()<Left>
+autocmd BufEnter *.js,*.ts,*.jsx,*.tsx noremap <C-B> :execute "w \| !npm start"
 
 "*******************************************
 " c
@@ -559,7 +571,7 @@ autocmd BufEnter *.c,*.cpp command R :execute 'w' | :execute '!gcc % && ./a.out'
 "*******************************************
 " rust
 "*******************************************
-autocmd BufEnter *.rs inoremap print println!();<Esc>hi
+autocmd BufEnter *.rs inoremap print println!();<Left><Left>
 " Run no cargo
 autocmd BufEnter *.rs command Rnc :execute 'w' | :execute '!rustc % && eval (echo "./%" | sed "s/[.]rs//")'
 autocmd BufEnter *.rs command R :execute 'w' | :execute '!cd .. && cargo run'
@@ -579,7 +591,7 @@ inoremap ;; <Esc><C-v>$A;<Esc>li
 nnoremap ;; <C-v>$A;<Esc>
 nnoremap \w <Esc>:se invwrap<CR>
 inoremap {{ <Esc>o{}<Left><CR><Esc>O
-autocmd BufEnter *.ts*,*.js*,*.rs* :inoremap {{ <Esc>$a {}<Left><CR><Esc>O 
+autocmd BufEnter *.ts*,*.js*,*.rs* :inoremap {{ <End> {}<Left><CR><Up><End><CR> 
 "*******************************************
 " settings
 "*******************************************
@@ -593,4 +605,6 @@ autocmd BufEnter *.ts*,*.js*,*.rs* :inoremap {{ <Esc>$a {}<Left><CR><Esc>O
 command! S :execute 'SudaWrite'
 command Sq :execute 'SudaWrite' | :execute 'q!'
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
-autocmd BufWritePost :execute 'RainbowParentheses'
+autocmd InsertLeave * :execute 'w | Prettier'
+set undofile
+set undodir=~/.config/nvim/undodir
