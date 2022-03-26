@@ -118,6 +118,7 @@ call plug#end()
 filetype plugin indent on
 
 
+
 "*****************************************************************************
 "" Basic Setup
 "*****************************************************************************"
@@ -602,8 +603,10 @@ autocmd BufEnter *.ts*,*.js*,*.rs* :inoremap {{ <End> {}<Left><CR><Up><End><CR>
 :noremap <A-s> <C-w><C-w>
 :nnoremap <Space> @q
 :au FocusLost * :wa | :Prettier
+autocmd BufEnter tsconfig.json :set ft=jsonc
 command! S :execute 'SudaWrite'
 command Sq :execute 'SudaWrite' | :execute 'q!'
+command Vinstall :execute 'so % | PlugInstall'
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
 autocmd InsertLeave * :execute 'w | Prettier'
 set undofile
