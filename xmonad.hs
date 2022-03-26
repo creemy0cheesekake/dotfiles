@@ -32,6 +32,7 @@ import XMonad.Layout.Spiral
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Accordion
+import XMonad.Layout.Spacing
 import XMonad.Prompt
 import XMonad.Prompt.RunOrRaise
 import XMonad.Util.EZConfig(additionalKeys)
@@ -60,7 +61,7 @@ myModMask       = mod4Mask
 myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 
 myNormalBorderColor  = "#000000"
-myFocusedBorderColor = "#90119e"
+myFocusedBorderColor = "#453711"
 
 
 ------------------------------------------------------------------------
@@ -82,6 +83,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch rofi
     , ((modm,               xK_p     ), spawn "rofi -show run")
+
+    -- toggle gaps
+    , ((modm .|. shiftMask, xK_g), toggleWindowSpacingEnabled )
+
+    -- decrease gaps
+    , ((modm .|. shiftMask, xK_d), decWindowSpacing 5 )
+
+    -- increase gaps
+    , ((modm .|. shiftMask, xK_i), incWindowSpacing 5 )
 
     -- launch flameshot
     , ((modm .|. shiftMask, xK_s     ), spawn "flameshot gui")
@@ -205,7 +215,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 -- 
-myLayout = avoidStruts ( smartBorders ( tabbed shrinkText tabConfig ||| tiled ) )
+myLayout = spacing 10 ( avoidStruts ( smartBorders ( tabbed shrinkText tabConfig ||| tiled ) ) )
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio

@@ -566,8 +566,12 @@ autocmd BufEnter *.js,*.ts,*.jsx,*.tsx noremap <C-B> :execute "w \| !npm start"
 " c
 "*******************************************
 autocmd BufEnter *.c,*.cpp inoremap print printf();<Esc>hi
-" Run no cargo
 autocmd BufEnter *.c,*.cpp command R :execute 'w' | :execute '!gcc % && ./a.out'
+
+"*******************************************
+" asm
+"*******************************************
+autocmd BufEnter *.asm noremap <C-B> :execute "w \| !make && ./%:r"
 
 "*******************************************
 " rust
@@ -584,6 +588,8 @@ inoremap jj <Esc>
 noremap <A-e> <Esc>
 nnoremap <Esc><Esc> :noh<CR>
 nnoremap dl yyp
+nnoremap 0 ^
+nnoremap 9 $
 inoremap :w <Esc>:w
 vnoremap :w <Esc>:w
 noremap <A-j> gT
@@ -600,10 +606,12 @@ autocmd BufEnter *.ts*,*.js*,*.rs* :inoremap {{ <End> {}<Left><CR><Up><End><CR>
 :set showcmd
 :nohlsearch
 :noremap <S-A-e> <Cmd>CocCommand explorer<CR>
+:noremap <C-q> <Cmd>!alacritty<CR><CR>
 :noremap <A-s> <C-w><C-w>
 :nnoremap <Space> @q
 :au FocusLost * :wa | :Prettier
 autocmd BufEnter tsconfig.json :set ft=jsonc
+autocmd BufEnter *.asm :set ft=nasm
 command! S :execute 'SudaWrite'
 command Sq :execute 'SudaWrite' | :execute 'q!'
 command Vinstall :execute 'so % | PlugInstall'
