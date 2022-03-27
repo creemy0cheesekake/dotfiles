@@ -290,9 +290,6 @@ let Grep_Default_Options = '-IR'
 let Grep_Skip_Files = '*.log *.db'
 let Grep_Skip_Dirs = '.git node_modules'
 
-" terminal emulation
-nnoremap <silent> <leader>sh :terminal<CR>
-
 
 "*****************************************************************************
 "" Commands
@@ -566,7 +563,7 @@ autocmd BufEnter *.js,*.ts,*.jsx,*.tsx noremap <C-B> :execute "w \| !npm start"
 " c
 "*******************************************
 autocmd BufEnter *.c,*.cpp inoremap print printf();<Esc>hi
-autocmd BufEnter *.c,*.cpp command R :execute 'w' | :execute '!gcc % && ./a.out'
+autocmd BufEnter *.c,*.cpp noremap <C-B> :execute 'w \| !gcc % -o %:r -lm && ./%:r'
 
 "*******************************************
 " asm
@@ -594,7 +591,7 @@ inoremap :w <Esc>:w
 vnoremap :w <Esc>:w
 noremap <A-j> gT
 noremap <A-k> gt
-inoremap ;; <Esc><C-v>$A;<Esc>li
+inoremap ;; <Esc><C-v>$A;<Esc>l
 nnoremap ;; <C-v>$A;<Esc>
 nnoremap \w <Esc>:se invwrap<CR>
 inoremap {{ <Esc>o{}<Left><CR><Esc>O

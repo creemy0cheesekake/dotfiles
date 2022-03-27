@@ -4,11 +4,6 @@ function cnct -a ssid password
 end
 funcsave cnct
 
-function cpy
-    $argv | xclip -sel clip
-end
-funcsave cpy
-
 function gdf -a url
     eval "wget (echo $url | sed "s/github/raw\.githubusercontent/" | sed "s/\/blob//")"
 end

@@ -7,7 +7,11 @@ nitrogen --restore &
 # Compositor
 picom -f -D 5 &
 
+# Enable AirPods Media Control
+mpris-proxy &
+
 # Enable tap to click on touchpad
-xinput --set-prop 'DELL0A75:00 06CB:7A13 Touchpad' 'libinput Tapping Enabled' 1
+# xinput --set-prop 'DELL0A75:00 06CB:7A13 Touchpad' 'libinput Tapping Enabled' 1
 # Decrease Mouse Sensitivity
 xinput --set-prop 'Compx 2.4G Receiver Mouse' 'libinput Accel Speed' -1
+

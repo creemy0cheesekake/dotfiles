@@ -50,4 +50,5 @@ fi
 
 . $HOME/.config/xorg/xprofile
 exec xmonad
+mpris-proxy & 
 
