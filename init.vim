@@ -61,6 +61,8 @@ Plug 'dahu/vim-fanfingtastic'
 Plug 'aonemd/kuroi.vim'
 Plug 'othree/eregex.vim'
 Plug 'psliwka/vim-smoothie'
+Plug 'kana/vim-operator-user'
+Plug 'rhysd/vim-clang-format'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -138,7 +140,7 @@ set shiftwidth=4
 set expandtab
 
 "" Map leader to ,
-let mapleader=','
+" let mapleader=','
 
 "" Enable hidden buffers
 set hidden
@@ -563,7 +565,9 @@ autocmd BufEnter *.js,*.ts,*.jsx,*.tsx noremap <C-B> :execute "w \| !npm start"
 " c
 "*******************************************
 autocmd BufEnter *.c,*.cpp inoremap print printf();<Esc>hi
-autocmd BufEnter *.c,*.cpp noremap <C-B> :execute 'w \| !gcc % -o %:r -lm && ./%:r'
+autocmd BufEnter *.c,*.cpp noremap <C-B> :execute 'w \| !gcc % -o _%:r -lm && ./_%:r'
+autocmd BufEnter *.c,*.cpp nnoremap <C-F> :ClangFormat<CR>
+autocmd BufEnter *.c,*.cpp vnoremap <C-F> :ClangFormat<CR>
 
 "*******************************************
 " asm
@@ -594,8 +598,9 @@ noremap <A-k> gt
 inoremap ;; <Esc><C-v>$A;<Esc>l
 nnoremap ;; <C-v>$A;<Esc>
 nnoremap \w <Esc>:se invwrap<CR>
-inoremap {{ <Esc>o{}<Left><CR><Esc>O
+inoremap {{ <End><CR>{}<Left><CR><Up><End><CR>
 autocmd BufEnter *.ts*,*.js*,*.rs* :inoremap {{ <End> {}<Left><CR><Up><End><CR> 
+autocmd BufLeave .c,.cpp :ClangFormat
 "*******************************************
 " settings
 "*******************************************
@@ -611,7 +616,7 @@ autocmd BufEnter tsconfig.json :set ft=jsonc
 autocmd BufEnter *.asm :set ft=nasm
 command! S :execute 'SudaWrite'
 command Sq :execute 'SudaWrite' | :execute 'q!'
-command Vinstall :execute 'so % | PlugInstall'
+command Vinstall :execute 'w | so % | PlugInstall'
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
 autocmd InsertLeave * :execute 'w | Prettier'
 set undofile

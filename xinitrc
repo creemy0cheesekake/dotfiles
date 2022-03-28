@@ -48,7 +48,8 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-. $HOME/.config/xorg/xprofile
+[ -e $HOME/.config/xorg/xprofile ] && . $HOME/.config/xorg/xprofile 
+
 exec xmonad
-mpris-proxy & 
+# mpris-proxy & 
 
