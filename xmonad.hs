@@ -9,19 +9,22 @@ import XMonad.Util.SpawnOnce
 import XMonad.Util.Run
 import System.IO
 import System.Exit
+import XMonad.Config
+-- Actions
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleWS
 import XMonad.Actions.GridSelect
 import XMonad.Actions.MouseGestures
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.Warp
-import XMonad.Config
+-- Hooks
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Script
 import XMonad.Hooks.SetWMName
+-- Layouts
 import XMonad.Layout.Decoration
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.MultiToggle
@@ -33,8 +36,11 @@ import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Accordion
 import XMonad.Layout.Spacing
+import XMonad.Layout.ResizableTile
+-- Prompt
 import XMonad.Prompt
 import XMonad.Prompt.RunOrRaise
+-- Util
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run(spawnPipe)
@@ -141,6 +147,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Expand the master area
     , ((modm,               xK_l     ), sendMessage Expand)
 
+    -- Shrink the master area
+    , ((modm,               xK_z     ), sendMessage MirrorShrink)
+
+    -- Expand the master area
+    , ((modm,               xK_a     ), sendMessage MirrorExpand)
+
     -- Push window back into tiling
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
 
@@ -218,7 +230,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 myLayout = spacing 10 ( avoidStruts ( smartBorders ( tabbed shrinkText tabConfig ||| tiled ||| Mirror tiled ) ) )
   where
      -- default tiling algorithm partitions the screen into two panes
-     tiled   = Tall nmaster delta ratio
+     tiled   = ResizableTall nmaster delta ratio []
 
      -- The default number of windows in the master pane
      nmaster = 2

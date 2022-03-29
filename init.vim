@@ -608,10 +608,11 @@ autocmd BufLeave .c,.cpp :ClangFormat
 :set showcmd
 :nohlsearch
 :noremap <S-A-e> <Cmd>CocCommand explorer<CR>
-:noremap <C-q> <Cmd>!alacritty<CR><CR>
+:noremap <C-q> <Cmd>!alacritty &<CR><CR>
 :noremap <A-s> <C-w><C-w>
 :nnoremap <Space> @q
 :au FocusLost * :wa | :Prettier
+:au FocusLost *.c,*.cpp :wa | :ClangFormat
 autocmd BufEnter tsconfig.json :set ft=jsonc
 autocmd BufEnter *.asm :set ft=nasm
 command! S :execute 'SudaWrite'
