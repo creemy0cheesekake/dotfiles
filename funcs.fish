@@ -46,7 +46,7 @@ function sc
 
     echo "DONE!"
 
-    read -rsn1
+    read -sn1 -p ''
     clear
 end
 funcsave sc
@@ -66,7 +66,7 @@ function c
 
     echo "DONE!"
 
-    read -rsn1
+    read -sn1 -p ''
     clear
 end
 funcsave c
