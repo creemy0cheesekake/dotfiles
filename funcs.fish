@@ -40,16 +40,8 @@ end
 funcsave p
 
 function sc
-    set msg ""
-
-    for arg in $argv
-       msg+="$arg "
-    end
-
-    # remove trailing whitespace
-    set msg (msg | xargs)
-
-    git add . git commit -m "$msg"
+    git add .
+    git commit -m "$argv"
     git push origin (git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 
     echo "DONE!"
