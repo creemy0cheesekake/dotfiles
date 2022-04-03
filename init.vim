@@ -501,6 +501,13 @@ let g:rainbow_load_separately = [
 let g:rainbow_guifgs = ['#a34b60', 'DarkOrange', '#a85bcf', 'FireBrick']
 let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
 
+let g:user_emmet_leader_key='<Tab>'
+let g:user_emmet_settings = {
+  \  'javascript.jsx' : {
+    \      'extends' : 'jsx',
+    \  },
+  \}
+
 "*****************************************************************************
 "*****************************************************************************
 
