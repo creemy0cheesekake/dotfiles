@@ -2,22 +2,22 @@ function cnct -a ssid password
     nmcli d wifi list >> /dev/null
     eval "nmcli d wifi connect $ssid password $password"
 end
-funcsave cnct
+# funcsave cnct
 
 function gdf -a url
     eval "wget (echo $url | sed "s/github/raw\.githubusercontent/" | sed "s/\/blob//")"
 end
-funcsave gdf
+# funcsave gdf
 
 function gc -a url
     eval "git clone https://github.com/$url.git"
 end
-funcsave gc
+# funcsave gc
 
 function zip
     eval "7z a '$argv.zip' '$argv'"
 end
-funcsave zip
+# funcsave zip
 
 function wifi
     set dev "wlp62s0"
@@ -27,7 +27,7 @@ function wifi
     eval "sudo ip link set $dev up"
     echo DONE! 
 end
-funcsave wifi
+# funcsave wifi
 
 function p
     set branch "(git branch | sed -n -e 's/^\* \(.*\)/\1/p')"
@@ -37,7 +37,7 @@ function p
 
     git push origin "$branch"
 end
-funcsave p
+# funcsave p
 
 function sc
     git add .
@@ -49,7 +49,7 @@ function sc
     read -sn1 -p ''
     clear
 end
-funcsave sc
+# funcsave sc
 
 function c
     set msg ""
@@ -69,12 +69,12 @@ function c
     read -sn1 -p ''
     clear
 end
-funcsave c
+# funcsave c
 
 function forcepush -a branch
     eval "git push origin $branch --force"
 end
-funcsave forcepush
+# funcsave forcepush
 
 function tsi
     for package in $argv
@@ -82,5 +82,5 @@ function tsi
         npm i -D "@types/$package"
     end
 end
-funcsave tsi
+# funcsave tsi
 
