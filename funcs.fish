@@ -30,7 +30,7 @@ end
 # funcsave wifi
 
 function p
-    set branch "(git branch | sed -n -e 's/^\* \(.*\)/\1/p')"
+    set branch (git branch | sed -n -e 's/^\* \(.*\)/\1/p')
     if test -n "$branch"
         set branch $1
     end

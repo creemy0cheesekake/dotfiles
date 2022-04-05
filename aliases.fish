@@ -16,3 +16,5 @@ alias spdt='speedtest-cli'
 alias mntwindows='sudo mount /dev/nvme0n1p3 /mnt/Windows/'
 alias ptc='ping 8.8.8.8'
 alias mkbch='git checkout -b'
+alias tmail="tmpmail && tmpmail | grep Inbox | sed 's/.*for //' | head -c-3 | cpy s"
+
