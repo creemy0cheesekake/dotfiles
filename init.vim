@@ -621,7 +621,7 @@ autocmd BufLeave .c,.cpp :ClangFormat
 :au FocusLost *.c,*.cpp :wa | :ClangFormat
 set relativenumber
 set cursorline
-autocmd BufEnter tsconfig.json :set ft=jsonc
+autocmd BufEnter *.json :set ft=jsonc
 autocmd BufEnter *.asm :set ft=nasm
 command! S :execute 'SudaWrite'
 command Sq :execute 'SudaWrite' | :execute 'q!'

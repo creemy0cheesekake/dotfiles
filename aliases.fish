@@ -1,4 +1,4 @@
-alias rm='echo "use trash-put (alias tp) instead."; false'
+# alias rm='echo "use trash-put (alias tp) instead."; false'
 alias f='vifm'
 alias tp='trash-put'
 alias pc='yay -S --removemake'

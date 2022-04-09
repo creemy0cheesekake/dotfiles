@@ -9,8 +9,18 @@ function gdf -a url
 end
 # funcsave gdf
 
-function gc -a url
-    eval "git clone https://github.com/$url.git"
+function gc -a url two three
+    if test (count $argv) -eq 3
+        if "$three" == "cd"
+            cd ("$url" | sed "s/.*\///" | xargs)
+        end
+        eval "git clone https://github.com/$url.git $two"
+    else
+        if "$two" == "cd"
+            cd ("$url" | sed "s/.*\///" | xargs)
+        end
+        eval "git clone https://github.com/$url.git"
+    end
 end
 # funcsave gc
 
