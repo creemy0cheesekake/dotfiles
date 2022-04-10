@@ -63,6 +63,7 @@ Plug 'othree/eregex.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'kana/vim-operator-user'
 Plug 'rhysd/vim-clang-format'
+Plug 'roosta/srcery'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -176,7 +177,7 @@ let no_buffers_menu=1
 " let g:onedark_config = {
 "     \ 'style': 'darker',
 " \}
-colorscheme kuroi
+colorscheme srcery
 
 
 " Better command line completion 
@@ -500,7 +501,7 @@ let g:rainbow_load_separately = [
 let g:rainbow_guifgs = ['#a34b60', 'DarkOrange', '#a85bcf', 'FireBrick']
 let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
 
-let g:user_emmet_leader_key='<Tab>'
+" let g:user_emmet_leader_key='<Tab>'
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {
     \      'extends' : 'jsx',
@@ -576,6 +577,12 @@ autocmd BufEnter *.c,*.cpp nnoremap <C-F> :ClangFormat<CR>
 autocmd BufEnter *.c,*.cpp vnoremap <C-F> :ClangFormat<CR>
 
 "*******************************************
+" python
+"*******************************************
+inoremap :: <End>:<CR>
+
+
+"*******************************************
 " asm
 "*******************************************
 autocmd BufEnter *.asm noremap <C-B> :execute "w \| !make && ./%:r"
@@ -606,19 +613,29 @@ nnoremap ;; <C-v>$A;<Esc>
 nnoremap \w <Esc>:se invwrap<CR>
 inoremap {{ <End><CR>{}<Left><CR><Up><End><CR>
 autocmd BufEnter *.ts*,*.js*,*.rs* :inoremap {{ <End> {}<Left><CR><Up><End><CR> 
-autocmd BufLeave .c,.cpp :ClangFormat
+noremap <C-s> <Esc>:w<CR>
 "*******************************************
 " settings
 "*******************************************
+let g:ale_fixers = {
+            \ 'python': ['autopep8', 'black'],
+            \ 'javascript': ['prettier', 'eslint'],
+            \ 'json': ['prettier', 'eslint'],
+            \ 'jsonc': ['prettier', 'eslint'],
+            \ 'c': ['clang-format'],
+            \ }
 :set clipboard=unnamedplus
 :set showcmd
+:set termguicolors
 :nohlsearch
 :noremap <S-A-e> <Cmd>CocCommand explorer<CR>
 :noremap <C-q> <Cmd>!alacritty &<CR><CR>
 :noremap <A-s> <C-w><C-w>
 :nnoremap <Space> @q
-:au FocusLost * :wa | :Prettier
-:au FocusLost *.c,*.cpp :wa | :ClangFormat
+nnoremap = :ALEFix<CR>
+:au FocusLost * :wa | :ALEFix
+let g:ale_fix_on_save = 1
+" :au FocusLost *.c,*.cpp :wa | :ClangFormat
 set relativenumber
 set cursorline
 autocmd BufEnter *.json :set ft=jsonc
@@ -627,6 +644,7 @@ command! S :execute 'SudaWrite'
 command Sq :execute 'SudaWrite' | :execute 'q!'
 command Vinstall :execute 'w | so % | PlugInstall'
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
-autocmd InsertLeave * :execute 'w | Prettier'
+autocmd InsertLeave * :execute 'w | ALEFix'
 set undofile
 set undodir=~/.config/nvim/undodir
+
