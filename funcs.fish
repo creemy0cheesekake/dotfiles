@@ -94,3 +94,9 @@ function tsi
 end
 # funcsave tsi
 
+function mkcdir -a dir
+    mkdir "$dir"
+    cd "$dir"
+end
+# funcsave mkcdir
+

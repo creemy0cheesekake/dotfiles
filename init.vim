@@ -64,6 +64,7 @@ Plug 'psliwka/vim-smoothie'
 Plug 'kana/vim-operator-user'
 Plug 'rhysd/vim-clang-format'
 Plug 'roosta/srcery'
+Plug 'vim-python/python-syntax'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -579,7 +580,9 @@ autocmd BufEnter *.c,*.cpp vnoremap <C-F> :ClangFormat<CR>
 "*******************************************
 " python
 "*******************************************
-inoremap :: <End>:<CR>
+autocmd BufEnter *.py inoremap :: <End>:<CR>
+autocmd BufEnter *.py inoremap print print()<Left>
+autocmd BufEnter *.py noremap <C-B> :execute "w \| !python %"
 
 
 "*******************************************
@@ -648,4 +651,5 @@ command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
 autocmd InsertLeave * :execute 'w | ALEFix'
 set undofile
 set undodir=~/.config/nvim/undodir
+let g:python_highlight_all = 1
 
