@@ -3,5 +3,3 @@
 	name = creemy0cheesekake
 [credential]
 	helper = store
-[core]
-	sharedRepository = group
