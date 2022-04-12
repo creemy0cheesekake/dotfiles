@@ -620,6 +620,7 @@ noremap <C-s> <Esc>:w<CR>
 let g:ale_fixers = {
             \ 'python': ['autopep8', 'black'],
             \ 'javascript': ['prettier', 'eslint'],
+            \ 'typescript': ['prettier', 'eslint'],
             \ 'json': ['prettier', 'eslint'],
             \ 'jsonc': ['prettier', 'eslint'],
             \ 'c': ['clang-format'],
