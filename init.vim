@@ -614,6 +614,7 @@ noremap <A-k> gt
 inoremap ;; <Esc><C-v>$A;<Esc>l
 nnoremap ;; <C-v>$A;<Esc>
 nnoremap \w <Esc>:se invwrap<CR>
+nnoremap <F8> ggyG
 inoremap {{ <End><CR>{}<Left><CR><Up><End><CR>
 autocmd BufEnter *.ts*,*.js*,*.rs* :inoremap {{ <End> {}<Left><CR><Up><End><CR> 
 noremap <C-s> <Esc>:w<CR>
