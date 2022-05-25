@@ -65,6 +65,13 @@ Plug 'kana/vim-operator-user'
 Plug 'rhysd/vim-clang-format'
 Plug 'roosta/srcery'
 Plug 'vim-python/python-syntax'
+Plug 'JuliaEditorSupport/julia-vim'
+Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+Plug 'kdheepak/JuliaFormatter.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'jsit/sasscomplete.vim'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -178,6 +185,9 @@ let no_buffers_menu=1
 " let g:onedark_config = {
 "     \ 'style': 'darker',
 " \}
+let g:coc_global_extensions = [
+  \ 'coc-tsserver'
+  \ ]
 colorscheme srcery
 
 
@@ -367,8 +377,8 @@ nnoremap <leader>sd :DeleteSession<CR>
 nnoremap <leader>sc :CloseSession<CR>
 
 "" Tabs
-nnoremap <Tab> :bn<CR>
-nnoremap <S-Tab> :bp<CR>
+nnoremap <Tab> gt
+nnoremap <A-Tab> gT
 
 "" Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
@@ -509,6 +519,25 @@ let g:user_emmet_settings = {
     \  },
   \}
 
+" julia
+let g:default_julia_version = '1.0'
+
+" language server
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_serverCommands = {
+\   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+\       using LanguageServer;
+\       using Pkg;
+\       import StaticLint;
+\       import SymbolServer;
+\       env_path = dirname(Pkg.Types.Context().env.project_file);
+\       
+\       server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
+\       server.runlinter = true;
+\       run(server);
+\   ']
+\ }
+
 "*****************************************************************************
 "*****************************************************************************
 
@@ -570,10 +599,11 @@ autocmd BufEnter *.js,*.ts,*.jsx,*.tsx inoremap log console.log()<Left>
 autocmd BufEnter *.js,*.ts,*.jsx,*.tsx noremap <C-B> :execute "w \| !npm start"
 
 "*******************************************
-" c
+" c, cpp
 "*******************************************
 autocmd BufEnter *.c,*.cpp inoremap print printf();<Esc>hi
-autocmd BufEnter *.c,*.cpp noremap <C-B> :execute 'w \| !gcc % -o _%:r -lm && ./_%:r'
+autocmd BufEnter *.c noremap <C-B> :execute 'w \| !gcc % -o _%:r -lm && ./_%:r'
+autocmd BufEnter *.cpp noremap <C-B> :execute 'w \| !g++ % -o _%:r -lm && ./_%:r'
 autocmd BufEnter *.c,*.cpp nnoremap <C-F> :ClangFormat<CR>
 autocmd BufEnter *.c,*.cpp vnoremap <C-F> :ClangFormat<CR>
 
@@ -582,14 +612,26 @@ autocmd BufEnter *.c,*.cpp vnoremap <C-F> :ClangFormat<CR>
 "*******************************************
 autocmd BufEnter *.py inoremap :: <End>:<CR>
 autocmd BufEnter *.py inoremap print print()<Left>
-autocmd BufEnter *.py noremap <C-B> :execute "w \| !python %"
+autocmd BufEnter *.py noremap <C-B> :execute "wa \| !python %"
 
+
+"*******************************************
+" julia
+"*******************************************
+autocmd BufEnter *.jl inoremap print println()<Left>
+autocmd BufEnter *.jl noremap <C-B> :execute "w \| !julia -O0 --compile=min --startup=no %"
+autocmd BufEnter *.jl nnoremap = :JuliaFormatterFormat<CR>
 
 "*******************************************
 " asm
 "*******************************************
 autocmd BufEnter *.asm noremap <C-B> :execute "w \| !make && ./%:r"
 
+
+"*******************************************
+" writing
+"*******************************************
+autocmd BufEnter *.writing :set lbr
 "*******************************************
 " rust
 "*******************************************
@@ -599,25 +641,38 @@ autocmd BufEnter *.rs command Rnc :execute 'w' | :execute '!rustc % && eval (ech
 autocmd BufEnter *.rs command R :execute 'w' | :execute '!cd .. && cargo run'
 
 "*******************************************
+" java
+"*******************************************
+autocmd BufEnter *.java inoremap print System.out.println();<Left><Left>
+
+"*******************************************
 " maps
 "*******************************************
 inoremap jj <Esc>
 noremap <A-e> <Esc>
-nnoremap <Esc><Esc> :noh<CR>
+nnoremap <silent> <Esc><Esc> :noh<CR>
 nnoremap dl yyp
-nnoremap 0 ^
-nnoremap 9 $
 inoremap :w <Esc>:w
 vnoremap :w <Esc>:w
-noremap <A-j> gT
-noremap <A-k> gt
+noremap <A-j> :w<CR>gT
+noremap <A-k> :w<CR>gt
 inoremap ;; <Esc><C-v>$A;<Esc>l
 nnoremap ;; <C-v>$A;<Esc>
 nnoremap \w <Esc>:se invwrap<CR>
 nnoremap <F8> ggyG
+nnoremap <A-1> f_x~
+nnoremap <A-c> c/\u<CR><Esc>:noh<CR>a
 inoremap {{ <End><CR>{}<Left><CR><Up><End><CR>
 autocmd BufEnter *.ts*,*.js*,*.rs* :inoremap {{ <End> {}<Left><CR><Up><End><CR> 
 noremap <C-s> <Esc>:w<CR>
+nnoremap <silent> j gj
+nnoremap <silent> k gk
+nnoremap <silent> 0 g^
+nnoremap <silent> 9 g$
+vnoremap <silent> j gj
+vnoremap <silent> k gk
+vnoremap <silent> 0 g^
+vnoremap <silent> 9 g$
 "*******************************************
 " settings
 "*******************************************
@@ -625,9 +680,13 @@ let g:ale_fixers = {
             \ 'python': ['autopep8', 'black'],
             \ 'javascript': ['prettier', 'eslint'],
             \ 'typescript': ['prettier', 'eslint'],
+            \ 'javascriptreact': ['prettier', 'eslint'],
+            \ 'typescriptreact': ['prettier', 'eslint'],
             \ 'json': ['prettier', 'eslint'],
             \ 'jsonc': ['prettier', 'eslint'],
             \ 'c': ['clang-format'],
+            \ 'cpp': ['clang-format'],
+            \ 'java': ['google_java_format'],
             \ }
 :set clipboard=unnamedplus
 :set showcmd
@@ -640,17 +699,16 @@ let g:ale_fixers = {
 nnoremap = :ALEFix<CR>
 :au FocusLost * :wa | :ALEFix
 let g:ale_fix_on_save = 1
-" :au FocusLost *.c,*.cpp :wa | :ClangFormat
 set relativenumber
 set cursorline
 autocmd BufEnter *.json :set ft=jsonc
 autocmd BufEnter *.asm :set ft=nasm
+autocmd BufEnter setup.cfg :set ft=toml
 command! S :execute 'SudaWrite'
 command Sq :execute 'SudaWrite' | :execute 'q!'
 command Vinstall :execute 'w | so % | PlugInstall'
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
-autocmd InsertLeave * :execute 'w | ALEFix'
+autocmd FileType css,sass,scss setlocal omnifunc=sasscomplete#CompleteSass noci
 set undofile
 set undodir=~/.config/nvim/undodir
 let g:python_highlight_all = 1
-

@@ -227,7 +227,8 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 -- 
-myLayout = spacing 10 ( avoidStruts ( smartBorders ( tabbed shrinkText tabConfig ||| tiled ||| Mirror tiled ) ) )
+-- myLayout = spacing 10 ( avoidStruts ( smartBorders ( tabbed shrinkText tabConfig ||| tiled ||| Mirror tiled ) ) )
+myLayout = spacing 10 ( avoidStruts ( smartBorders ( tabbed shrinkText tabConfig ||| tiled ) ) )
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = ResizableTall nmaster delta ratio []
