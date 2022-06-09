@@ -3,3 +3,5 @@
 	name = creemy0cheesekake
 [credential]
 	helper = store
+[core]
+	editor = nvim

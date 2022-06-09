@@ -72,6 +72,11 @@ Plug 'junegunn/goyo.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'jsit/sasscomplete.vim'
+Plug 'rstacruz/vim-hyperstyle'
+Plug 'DougBeney/pickachu'
+Plug 'neoclide/vim-jsx-improve'
+Plug 'suy/vim-context-commentstring'
+
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -512,7 +517,7 @@ let g:rainbow_load_separately = [
 let g:rainbow_guifgs = ['#a34b60', 'DarkOrange', '#a85bcf', 'FireBrick']
 let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
 
-" let g:user_emmet_leader_key='<Tab>'
+let g:user_emmet_leader_key='<A-,>'
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {
     \      'extends' : 'jsx',
@@ -597,6 +602,7 @@ endif
 "*******************************************
 autocmd BufEnter *.js,*.ts,*.jsx,*.tsx inoremap log console.log()<Left>
 autocmd BufEnter *.js,*.ts,*.jsx,*.tsx noremap <C-B> :execute "w \| !npm start"
+autocmd BufEnter *.jsx,*.tsx nnoremap '' :execute "TCommentAs jsx"<CR>
 
 "*******************************************
 " c, cpp
@@ -614,6 +620,10 @@ autocmd BufEnter *.py inoremap :: <End>:<CR>
 autocmd BufEnter *.py inoremap print print()<Left>
 autocmd BufEnter *.py noremap <C-B> :execute "wa \| !python %"
 
+"*******************************************
+" sass
+"*******************************************
+autocmd BufEnter *.sass nnoremap = :execute ":w \| :%retab \| :w \| :!sass-convert -i --indent t %"<CR><CR>
 
 "*******************************************
 " julia
@@ -712,3 +722,7 @@ autocmd FileType css,sass,scss setlocal omnifunc=sasscomplete#CompleteSass noci
 set undofile
 set undodir=~/.config/nvim/undodir
 let g:python_highlight_all = 1
+au BufEnter .* setl tabstop=4|setl shiftwidth=4|setl expandtab softtabstop=4
+set ts=4 sw=4 ai
+map <A-r> :Pickachu<CR>
+set runtimepath-=~/plugged/vim_javascript
