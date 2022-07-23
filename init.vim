@@ -191,7 +191,8 @@ let no_buffers_menu=1
 "     \ 'style': 'darker',
 " \}
 let g:coc_global_extensions = [
-  \ 'coc-tsserver'
+  \ 'coc-tsserver',
+  \ 'coc-stylelintplus'
   \ ]
 colorscheme srcery
 
@@ -604,6 +605,8 @@ autocmd BufEnter *.js,*.ts,*.jsx,*.tsx inoremap log console.log()<Left>
 autocmd BufEnter *.js,*.ts,*.jsx,*.tsx noremap <C-B> :execute "w \| !npm start"
 autocmd BufEnter *.jsx,*.tsx nnoremap '' :execute "TCommentAs jsx"<CR>
 
+autocmd FileType javascriptreact,typescriptreact nnoremap <A-.> :s/className="\(.\{-}\)"/className={styles.\1}/g<CR>:noh<CR>``
+
 "*******************************************
 " c, cpp
 "*******************************************
@@ -623,7 +626,7 @@ autocmd BufEnter *.py noremap <C-B> :execute "wa \| !python %"
 "*******************************************
 " sass
 "*******************************************
-autocmd BufEnter *.sass nnoremap = :execute ":w \| :%retab \| :w \| :!sass-convert -i --indent t %"<CR><CR>
+" autocmd FileType sass nnoremap = :execute ":w \| :%retab \| :w \| :!sass-convert -i --indent t %"<CR><CR>
 
 "*******************************************
 " julia
@@ -658,14 +661,14 @@ autocmd BufEnter *.java inoremap print System.out.println();<Left><Left>
 "*******************************************
 " maps
 "*******************************************
-inoremap jj <Esc>
-noremap <A-e> <Esc>
+" inoremap jj <Esc>
+" noremap <A-e> <Esc>
 nnoremap <silent> <Esc><Esc> :noh<CR>
 nnoremap dl yyp
 inoremap :w <Esc>:w
 vnoremap :w <Esc>:w
-noremap <A-j> :w<CR>gT
-noremap <A-k> :w<CR>gt
+" noremap <A-j> :w<CR>gT
+" noremap <A-k> :w<CR>gt
 inoremap ;; <Esc><C-v>$A;<Esc>l
 nnoremap ;; <C-v>$A;<Esc>
 nnoremap \w <Esc>:se invwrap<CR>
@@ -697,7 +700,9 @@ let g:ale_fixers = {
             \ 'c': ['clang-format'],
             \ 'cpp': ['clang-format'],
             \ 'java': ['google_java_format'],
+            \ 'sass': ['stylelint'],
             \ }
+            " \ 'sass': ['sass-convert -i --indent t'],
 :set clipboard=unnamedplus
 :set showcmd
 :set termguicolors
@@ -706,6 +711,7 @@ let g:ale_fixers = {
 :noremap <C-q> <Cmd>!alacritty &<CR><CR>
 :noremap <A-s> <C-w><C-w>
 :nnoremap <Space> @q
+:se linebreak
 nnoremap = :ALEFix<CR>
 :au FocusLost * :wa | :ALEFix
 let g:ale_fix_on_save = 1
@@ -713,7 +719,7 @@ set relativenumber
 set cursorline
 autocmd BufEnter *.json :set ft=jsonc
 autocmd BufEnter *.asm :set ft=nasm
-autocmd BufEnter setup.cfg :set ft=toml
+autocmd BufEnter setup.cfg,*.conf :set ft=toml
 command! S :execute 'SudaWrite'
 command Sq :execute 'SudaWrite' | :execute 'q!'
 command Vinstall :execute 'w | so % | PlugInstall'
@@ -726,3 +732,6 @@ au BufEnter .* setl tabstop=4|setl shiftwidth=4|setl expandtab softtabstop=4
 set ts=4 sw=4 ai
 map <A-r> :Pickachu<CR>
 set runtimepath-=~/plugged/vim_javascript
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <A-j> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <A-k> pumvisible() ? "\<C-p>" : "\<S-Tab>"

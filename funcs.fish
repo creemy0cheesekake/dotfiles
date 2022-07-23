@@ -25,9 +25,46 @@ end
 # funcsave gc
 
 function zip
-    eval "7z a '$argv.zip' '$argv'"
+    set dir (echo $argv | sed 's:/*$::')
+    eval "7z a '$dir.zip' '$dir'"
 end
 # funcsave zip
+
+function uz
+    set file ""
+    set o "0"
+    set d "0"
+    for i in $argv
+        if echo $i | grep "^-"
+            if echo $i | grep "o"
+                set o "1"
+            end
+            if echo $i | grep "d"
+                set d "1"
+            end
+        else
+            set file "$file $i"
+        end
+    end
+    set file (echo "$file" | xargs)
+
+    if test $o = 0
+        eval "7z e '$file'"
+    else
+        set name (echo $file | sed 's/\.[^.]*$//')
+        while not mkdir $name
+            set name "$name-1"
+            break
+        end
+        eval "7z e '$file' -o'./$name'"
+        eval "find '$name' -empty -type d -delete"
+    end
+    if test $d = 1
+        rm $file
+    end
+    eval "find ./ -empty -type d -delete"
+end
+# funcsave uz
 
 function wifi
     set dev "wlp62s0"
@@ -88,8 +125,8 @@ end
 
 function tsi
     for package in $argv
-        npm i -S "$package"
-        npm i -D "@types/$package"
+        yarn add "$package"
+        yarn add "@types/$package" --dev
     end
 end
 # funcsave tsi

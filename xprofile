@@ -10,9 +10,13 @@ picom -f -D 5 &
 # Enable AirPods Media Control
 mpris-proxy &
 
-# Enable tap to click on touchpad
+# Disable tap to click on touchpad
 xinput --set-prop 'DELL0A75:00 06CB:7A13 Touchpad' 'libinput Tapping Enabled' 0
+# Natural scrolling on trackpad
+xinput --set-prop 'DELL0A75:00 06CB:7A13 Touchpad' 'libinput Natural Scrolling Enabled' 1
 # Decrease Mouse Sensitivity
 xinput --set-prop 'Compx 2.4G Receiver Mouse' 'libinput Accel Speed' -1
 # Set Compose Key to Right Alt
 setxkbmap -option compose:ralt
+# Remap Caps Lock to Esc and F12 to Caps Lock
+[[ -f ~/.config/xmodmap/xmodmap ]] && xmodmap ~/.config/xmodmap/xmodmap && xmodmap -e 'clear lock'

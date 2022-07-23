@@ -11,13 +11,17 @@ alias lsc='ls --color=never'
 alias v='nvim'
 alias bin='cd /usr/local/bin'
 alias music='cmus'
-alias video='mpv'
+alias play='mpv'
 alias spdt='speedtest-cli'
+alias tetris='yetris'
 alias mntwindows='sudo mount /dev/nvme0n1p3 /mnt/Windows/'
 alias ptc='ping 8.8.8.8'
 alias mkbch='git checkout -b'
-alias tmail="tmpmail -c"
+alias tmail="tmpmail && tmpmail | grep Inbox | sed 's/.*for //' | head -c-3 | cpy s"
 alias jl="julia"
 alias tard="tar -zxvf"
 alias z="zathura"
-
+alias torrent="transmission-cli"
+alias prune="find . -empty -type d -delete "
+alias keys="xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf \"%-3s %s\n\", \$5, \$8 }'"
+alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
