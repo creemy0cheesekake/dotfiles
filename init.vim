@@ -76,7 +76,9 @@ Plug 'rstacruz/vim-hyperstyle'
 Plug 'DougBeney/pickachu'
 Plug 'neoclide/vim-jsx-improve'
 Plug 'suy/vim-context-commentstring'
-
+Plug 'evanleck/vim-svelte'
+Plug 'shaunsingh/oxocarbon.nvim', { 'do': 'bash install.sh' }
+Plug 'othree/html5.vim'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -195,6 +197,7 @@ let g:coc_global_extensions = [
   \ 'coc-stylelintplus'
   \ ]
 colorscheme srcery
+" colorscheme oxocarbon
 
 
 " Better command line completion 
@@ -486,10 +489,6 @@ nnoremap <Leader>o :.Gbrowse<CR>
 "" Custom configs
 "*****************************************************************************
 
-" html
-" for html files, 2 spaces
-autocmd Filetype html setlocal ts=2 sw=2 expandtab
-
 
 " javascript
 let g:javascript_enable_domhtmlcss = 1
@@ -601,9 +600,7 @@ endif
 "*******************************************
 " js
 "*******************************************
-autocmd BufEnter *.js,*.ts,*.jsx,*.tsx inoremap log console.log()<Left>
 autocmd BufEnter *.js,*.ts,*.jsx,*.tsx noremap <C-B> :execute "w \| !npm start"
-autocmd BufEnter *.jsx,*.tsx nnoremap '' :execute "TCommentAs jsx"<CR>
 
 autocmd FileType javascriptreact,typescriptreact nnoremap <A-.> :s/className="\(.\{-}\)"/className={styles.\1}/g<CR>:noh<CR>``
 
@@ -627,6 +624,9 @@ autocmd BufEnter *.py noremap <C-B> :execute "wa \| !python %"
 " sass
 "*******************************************
 " autocmd FileType sass nnoremap = :execute ":w \| :%retab \| :w \| :!sass-convert -i --indent t %"<CR><CR>
+autocmd FileType sass :set tabstop=4
+autocmd FileType sass :set softtabstop=4
+autocmd FileType sass :set shiftwidth=4
 
 "*******************************************
 " julia
@@ -686,6 +686,7 @@ vnoremap <silent> j gj
 vnoremap <silent> k gk
 vnoremap <silent> 0 g^
 vnoremap <silent> 9 g$
+command Snip :execute 'tabe /home/arjun/plugged/vim-snippets/snippets/'
 "*******************************************
 " settings
 "*******************************************
@@ -697,6 +698,7 @@ let g:ale_fixers = {
             \ 'typescriptreact': ['prettier', 'eslint'],
             \ 'json': ['prettier', 'eslint'],
             \ 'jsonc': ['prettier', 'eslint'],
+            \ 'svelte': ['prettier', 'eslint'],
             \ 'c': ['clang-format'],
             \ 'cpp': ['clang-format'],
             \ 'java': ['google_java_format'],
@@ -712,6 +714,7 @@ let g:ale_fixers = {
 :noremap <A-s> <C-w><C-w>
 :nnoremap <Space> @q
 :se linebreak
+autocmd BufEnter * :syntax enable
 nnoremap = :ALEFix<CR>
 :au FocusLost * :wa | :ALEFix
 let g:ale_fix_on_save = 1
@@ -719,6 +722,7 @@ set relativenumber
 set cursorline
 autocmd BufEnter *.json :set ft=jsonc
 autocmd BufEnter *.asm :set ft=nasm
+autocmd BufEnter *.env* :set ft=sh
 autocmd BufEnter setup.cfg,*.conf :set ft=toml
 command! S :execute 'SudaWrite'
 command Sq :execute 'SudaWrite' | :execute 'q!'

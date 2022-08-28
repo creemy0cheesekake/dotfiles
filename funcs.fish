@@ -126,7 +126,7 @@ end
 function tsi
     for package in $argv
         yarn add "$package"
-        yarn add "@types/$package" --dev
+        yarn add -D "@types/$package"
     end
 end
 # funcsave tsi
@@ -137,3 +137,46 @@ function mkcdir -a dir
 end
 # funcsave mkcdir
 
+function massmv
+    set destination $argv[-1]
+    set list $argv[1..-2]
+    for i in $list
+        eval "mv $i $destination"
+    end
+end
+# funcsave massmv
+
+function cd
+    builtin cd $argv && ls
+end
+# funcsave cd
+
+function create-svelte
+    set name ""
+    set ts ""
+    set c ""
+    for i in $argv
+        if echo $i | grep "^--ts" >> /dev/null
+                set ts "1"
+        else if echo $i | grep "^-c\$" >> /dev/null
+                set c "1"
+        else
+            set name "$name $i"
+        end
+    end
+    set name (echo "$name" | xargs)
+    if test -z "$ts"
+        eval "yarn create vite --template svelte $name" 
+        builtin cd $name && rm -rf .vscode && yarn
+        if test -z "$c"
+            cd .. >> /dev/null
+        end
+    else
+        eval "yarn create vite --template svelte-ts $name" 
+        builtin cd $name && rm -rf .vscode && yarn
+        if test -z "$c"
+            cd .. >> /dev/null
+        end
+    end
+end
+# funcsave create-svelte

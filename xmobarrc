@@ -19,7 +19,7 @@ Config { font = "xft:Roboto Mono:pixelsize=12:antialias=true:hinting=true"
 		    , Run Com "/home/arjun/xmobar-tools/cpu" [] "cpu" 10
 		    , Run Com "/home/arjun/xmobar-tools/memory" [] "memory" 10
 		    , Run Com "/home/arjun/xmobar-tools/battery" [] "battery" 10
-		    , Run Com "/home/arjun/xmobar-tools/volume" [] "volume" 5
+		    , Run Com "/home/arjun/xmobar-tools/volume" [] "volume" 1
 		    , Run Com "/home/arjun/xmobar-tools/spotify" [] "spotify" 10
 		    , Run Com "/home/arjun/xmobar-tools/pacman-updates" [] "pacman-updates" 600
 		    , Run Com "/home/arjun/xmobar-tools/bluetooth" [] "bluetooth" 10
@@ -29,6 +29,5 @@ Config { font = "xft:Roboto Mono:pixelsize=12:antialias=true:hinting=true"
        , sepChar = "%"
        , alignSep = "}{"
        , template = " | <action=`shutdown now`><fn=1></fn></action> | <fc=#254380><fn=1>﬙</fn> %cpu%</fc> | <fc=#5c2c96><fn=1></fn> %memory%</fc> | <fc=#d6b031><fn=1></fn> %brightness%</fc> | }\
-                    \{ <action=`eval $(/home/arjun/xmobar-tools/runPac)` button=1><fc=#f2d95c><fn=1></fn> %pacman-updates%</fc></action> | %spotify% <action=`eval $(alacritty -e 'bluetoothctl' & )`>%bluetooth%</action> | <fc=#2f6d99><fn=1>墳</fn> %volume%</fc> | <fc=#2f806b><fn=1></fn> %wifi%</fc> | <fc=#ab3737><fn=1></fn> %battery%</fc> | <fc=#ee9a00><fn=1></fn> %date%</fc> | "
+                    \{ <action=`eval $(/home/arjun/xmobar-tools/runPac)` button=1><fc=#f2d95c><fn=1></fn> %pacman-updates%</fc></action> | <action=`playerctl play-pause` button=1>%spotify%</action> <action=`eval $(alacritty -e 'bluetoothctl' & )`>%bluetooth%</action> | <fc=#2f6d99><fn=1>墳</fn> %volume%</fc> | <fc=#2f806b><fn=1></fn> %wifi%</fc> | <fc=#ab3737><fn=1></fn> %battery%</fc> | <fc=#ee9a00><fn=1></fn> %date%</fc> | "
 }
-
