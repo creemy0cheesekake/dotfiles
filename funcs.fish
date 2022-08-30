@@ -180,3 +180,8 @@ function create-svelte
     end
 end
 # funcsave create-svelte
+
+function swap -a file1 file2
+    set temp (mktemp -dp /home/arjun/.local/share) && mv "$file1" $temp && mv "$file2" "$file1" && mv "$temp/$file1" "$file2" || set temp (mktemp -dp /tmp) && sudo mv "$file1" $temp && sudo mv "$file2" "$file1" && sudo mv "$temp/$file1" "$file2" 
+end
+# funcsave swap
