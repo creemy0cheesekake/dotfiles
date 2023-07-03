@@ -44,7 +44,7 @@ import XMonad.Prompt.RunOrRaise
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.Scratchpad
+import XMonad.Util.NamedScratchpad
 import XMonad.Util.Cursor
 
 import qualified XMonad.StackSet as W
@@ -80,8 +80,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     
     -- volume keys
     , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+
     , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
     , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
+
+    -- not working
+    , ((shiftMask, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -1%")
+	-- working
+    , ((shiftMask, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +1%")
 
     -- brightness keys
     , ((0, xF86XK_MonBrightnessUp), spawn "light -A 5")
@@ -127,7 +133,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_k     ), windows W.focusDown)
 
     -- Move focus to the previous window
-    , ((modm,               xK_j     ), windows W.focusUp  )
+    , ((modm .|. shiftMask, xK_Tab   ), windows W.focusUp)
+
+    -- Move focus to the previous window
+    , ((modm,               xK_j     ), windows W.focusUp)
 
     -- Move focus to the master window
     , ((modm,               xK_m     ), windows W.focusMaster  )
@@ -172,7 +181,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
-    , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((modm              , xK_q     ), spawn "xmonad --recompile; killall xmobar; xmonad --restart")
 
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
     , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
@@ -189,7 +198,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ++
 
     --
-    -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
+    -- mod-{w,e,r}, Switch to physical/xinerama screens 1, 2, or 3
     -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
     --
     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
@@ -289,6 +298,9 @@ myLogHook = return()
 ------------------------------------------------------------------------
 -- On Start
 --
+-- myStartupHook = do
+--     setDefaultCursor xC_left_ptr
+--	setWMName "LG3D"
 myStartupHook = setDefaultCursor xC_left_ptr
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
@@ -296,7 +308,7 @@ myStartupHook = setDefaultCursor xC_left_ptr
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
-  xmproc <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc"
+  xmproc <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/.xmobarrc"
   xmonad $ docks defaults;
 
 -- A structure containing your configuration settings, overriding

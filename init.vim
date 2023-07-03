@@ -4,11 +4,11 @@
 "" Vim-Plug core
 "*****************************************************************************
 let vimplug_exists=expand('~/./autoload/plug.vim')
-if has('win32')&&!has('win64')
-  let curl_exists=expand('C:\Windows\Sysnative\curl.exe')
-else
+" if has('win32')&&!has('win64')
+"   let curl_exists=expand('C:\Windows\Sysnative\curl.exe')
+" else
   let curl_exists=expand('curl')
-endif
+" endif
 
 let g:vim_bootstrap_langs = "html,javascript,typescript"
 let g:vim_bootstrap_editor = ""				" nvim or vim
@@ -62,7 +62,6 @@ Plug 'aonemd/kuroi.vim'
 Plug 'othree/eregex.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'kana/vim-operator-user'
-Plug 'rhysd/vim-clang-format'
 Plug 'roosta/srcery'
 Plug 'vim-python/python-syntax'
 Plug 'JuliaEditorSupport/julia-vim'
@@ -79,6 +78,11 @@ Plug 'suy/vim-context-commentstring'
 Plug 'evanleck/vim-svelte'
 Plug 'shaunsingh/oxocarbon.nvim', { 'do': 'bash install.sh' }
 Plug 'othree/html5.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'ThePrimeagen/harpoon'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+Plug 'puremourning/vimspector'
+Plug 'ellisonleao/gruvbox.nvim'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -155,8 +159,8 @@ set softtabstop=0
 set shiftwidth=4
 set expandtab
 
-"" Map leader to ,
-" let mapleader=','
+"" Map leader
+let mapleader='\'
 
 "" Enable hidden buffers
 set hidden
@@ -196,7 +200,8 @@ let g:coc_global_extensions = [
   \ 'coc-tsserver',
   \ 'coc-stylelintplus'
   \ ]
-colorscheme srcery
+colorscheme gruvbox
+" colorscheme srcery
 " colorscheme oxocarbon
 
 
@@ -221,7 +226,7 @@ else
 
   " IndentLine
   let g:indentLine_enabled = 1
-  let g:indentLine_concealcursor = 0
+  " let g:indentLine_concealcursor = 0
   let g:indentLine_char = '┆'
   let g:indentLine_faster = 1
 
@@ -607,23 +612,25 @@ autocmd FileType javascriptreact,typescriptreact nnoremap <A-.> :s/className="\(
 "*******************************************
 " c, cpp
 "*******************************************
-autocmd BufEnter *.c,*.cpp inoremap print printf();<Esc>hi
 autocmd BufEnter *.c noremap <C-B> :execute 'w \| !gcc % -o _%:r -lm && ./_%:r'
 autocmd BufEnter *.cpp noremap <C-B> :execute 'w \| !g++ % -o _%:r -lm && ./_%:r'
-autocmd BufEnter *.c,*.cpp nnoremap <C-F> :ClangFormat<CR>
-autocmd BufEnter *.c,*.cpp vnoremap <C-F> :ClangFormat<CR>
+autocmd BufEnter *.c noremap <C-N> :execute 'w \| !gcc % -Wall -g -o d_%:r -lm && alacritty -e gdb d_%:r &'<CR><CR>
+autocmd BufEnter *.cpp noremap <C-N> :execute 'w \| !g++ % -Wall -g -o d_%:r -lm && alacritty -e gdb d_%:r &'<CR><CR>
+" autocmd BufEnter *.c,*.cpp nnoremap <C-F> :ClangFormat<CR>
+" autocmd BufEnter *.c,*.cpp vnoremap <C-F> :ClangFormat<CR>
+autocmd BufEnter *.c,*.cpp noremap ;; <C-v>$A;<Esc>
+autocmd BufEnter *.c,*.cpp noremap ;; <Esc><C-v>$A;<Esc>l
 
 "*******************************************
 " python
 "*******************************************
 autocmd BufEnter *.py inoremap :: <End>:<CR>
-autocmd BufEnter *.py inoremap print print()<Left>
 autocmd BufEnter *.py noremap <C-B> :execute "wa \| !python %"
 
 "*******************************************
 " sass
 "*******************************************
-" autocmd FileType sass nnoremap = :execute ":w \| :%retab \| :w \| :!sass-convert -i --indent t %"<CR><CR>
+" autocmd FileType sass nnoremap = :execute ":w \| :%retab \| :w \| :%!sass-convert -i -s --indent t"<CR><CR>
 autocmd FileType sass :set tabstop=4
 autocmd FileType sass :set softtabstop=4
 autocmd FileType sass :set shiftwidth=4
@@ -657,39 +664,43 @@ autocmd BufEnter *.rs command R :execute 'w' | :execute '!cd .. && cargo run'
 " java
 "*******************************************
 autocmd BufEnter *.java inoremap print System.out.println();<Left><Left>
+autocmd BufEnter *.java noremap ;; <C-v>$A;<Esc>
+autocmd BufEnter *.java noremap ;; <Esc><C-v>$A;<Esc>l
+
+"*******************************************
+" C#
+"*******************************************
+autocmd BufEnter *.cs noremap <C-B> :execute "w \| !mcs % && mono %:r.exe"
+autocmd BufEnter *.cs noremap ;; <C-v>$A;<Esc>
+autocmd BufEnter *.cs noremap ;; <Esc><C-v>$A;<Esc>l
 
 "*******************************************
 " maps
 "*******************************************
 " inoremap jj <Esc>
-" noremap <A-e> <Esc>
 nnoremap <silent> <Esc><Esc> :noh<CR>
 nnoremap dl yyp
-inoremap :w <Esc>:w
-vnoremap :w <Esc>:w
-" noremap <A-j> :w<CR>gT
-" noremap <A-k> :w<CR>gt
-inoremap ;; <Esc><C-v>$A;<Esc>l
-nnoremap ;; <C-v>$A;<Esc>
 nnoremap \w <Esc>:se invwrap<CR>
 nnoremap <F8> ggyG
 nnoremap <A-1> f_x~
 nnoremap <A-c> c/\u<CR><Esc>:noh<CR>a
-inoremap {{ <End><CR>{}<Left><CR><Up><End><CR>
-autocmd BufEnter *.ts*,*.js*,*.rs* :inoremap {{ <End> {}<Left><CR><Up><End><CR> 
+" inoremap {{ <End><CR>{}<Left><CR><Up><End><CR>
+inoremap {{ <End> {}<Left><CR><Up><End><CR> 
+" autocmd BufEnter *.ts*,*.js*,*.rs* :inoremap {{ <End> {}<Left><CR><Up><End><CR> 
 noremap <C-s> <Esc>:w<CR>
 nnoremap <silent> j gj
 nnoremap <silent> k gk
 nnoremap <silent> 0 g^
-nnoremap <silent> 9 g$
+nnoremap <silent> - g$
 vnoremap <silent> j gj
 vnoremap <silent> k gk
 vnoremap <silent> 0 g^
-vnoremap <silent> 9 g$
+vnoremap <silent> - g$
 command Snip :execute 'tabe /home/arjun/plugged/vim-snippets/snippets/'
 "*******************************************
 " settings
 "*******************************************
+let g:ale_python_autopep8_options = '--max-line-length=120'
 let g:ale_fixers = {
             \ 'python': ['autopep8', 'black'],
             \ 'javascript': ['prettier', 'eslint'],
@@ -711,7 +722,7 @@ let g:ale_fixers = {
 :nohlsearch
 :noremap <S-A-e> <Cmd>CocCommand explorer<CR>
 :noremap <C-q> <Cmd>!alacritty &<CR><CR>
-:noremap <A-s> <C-w><C-w>
+" :noremap <A-s> <C-w><C-w>
 :nnoremap <Space> @q
 :se linebreak
 autocmd BufEnter * :syntax enable
@@ -723,6 +734,7 @@ set cursorline
 autocmd BufEnter *.json :set ft=jsonc
 autocmd BufEnter *.asm :set ft=nasm
 autocmd BufEnter *.env* :set ft=sh
+autocmd BufEnter *clang-format :set ft=yaml
 autocmd BufEnter setup.cfg,*.conf :set ft=toml
 command! S :execute 'SudaWrite'
 command Sq :execute 'SudaWrite' | :execute 'q!'
@@ -739,3 +751,19 @@ set runtimepath-=~/plugged/vim_javascript
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <A-j> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <A-k> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "\<CR>"
+nnoremap <A-f> <cmd>Telescope find_files<cr>
+let g:vimspector_enable_mappings = 'HUMAN'
+nnoremap <Leader>di <Plug>VimspectorBalloonEval
+xnoremap <Leader>di <Plug>VimspectorBalloonEval
+" nnoremap <Leader>dd :call vimspector#Launch()<CR>
+" nnoremap <Leader>ds :call vimspector#Reset()<CR>
+" nnoremap <Leader>dc :call vimspector#Continue()<CR>
+"
+" nnoremap <Leader>dt :call vimspector#ToggleBreakpoint()<CR>
+" nnoremap <Leader>dT :call vimspector#ClearBreakpoints()<CR>
+"
+" nnoremap <Leader>dr <Plug>VimspectorRestart
+" nnoremap <Leader>do <Plug>VimspectorStepOut
+" nnoremap <Leader>dn <Plug>VimspectorStepInto
+" nnoremap <Leader>dN <Plug>VimspectorStepOver

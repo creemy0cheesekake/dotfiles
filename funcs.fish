@@ -1,6 +1,6 @@
 function cnct -a ssid password
     nmcli d wifi list >> /dev/null
-    eval "nmcli d wifi connect $ssid password $password"
+    eval "nmcli d wifi connect '$ssid' password '$password'"
 end
 # funcsave cnct
 
@@ -99,17 +99,9 @@ end
 # funcsave sc
 
 function c
-    set msg ""
-
-    for arg in $argv
-       msg+="$arg "
-    end
-
-    # remove trailing whitespace
-    set msg (msg | xargs)
-
     git add .
-    git commit -m "$msg"
+    # git commit -m "$argv"
+    git commit -m "$(echo "$argv" | xargs)"
 
     echo "DONE!"
 
@@ -185,3 +177,15 @@ function swap -a file1 file2
     set temp (mktemp -dp /home/arjun/.local/share) && mv "$file1" $temp && mv "$file2" "$file1" && mv "$temp/$file1" "$file2" || set temp (mktemp -dp /tmp) && sudo mv "$file1" $temp && sudo mv "$file2" "$file1" && sudo mv "$temp/$file1" "$file2" 
 end
 # funcsave swap
+
+function toggletapping
+	set temp (xinput --list-props 'DELL0A75:00 06CB:7A13 Touchpad' | grep 'libinput Tapping Enabled (')
+	set current (string sub --start=-1 $temp)
+	if test $current = '1'
+		xinput --set-prop 'DELL0A75:00 06CB:7A13 Touchpad' 'libinput Tapping Enabled' 0
+	else
+		xinput --set-prop 'DELL0A75:00 06CB:7A13 Touchpad' 'libinput Tapping Enabled' 1
+	end
+end
+# funcsave toggletapping
+

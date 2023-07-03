@@ -1,0 +1,20 @@
+#! /bin/sh
+
+line=$(nmcli d | grep " wifi " | xargs)
+
+arr=($line)
+
+x=0
+
+msg=""
+
+for i in ${arr[@]}
+do
+    if [ "$x" -gt 2 ]
+    then
+        msg="$msg$i "
+    fi
+    x=$((x+1))
+done
+
+echo $msg | xargs

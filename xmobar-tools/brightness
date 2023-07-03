@@ -1,0 +1,5 @@
+#! /bin/sh
+
+raw=`light -G`
+modified=${raw::-3}
+echo "$modified%"

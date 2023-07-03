@@ -1,0 +1,32 @@
+#! /bin/sh
+
+msg="None"
+
+# bluetoothctl paired-devices | cut -f2 -d' '|
+# while read -r uuid
+# do
+#     info=`bluetoothctl info $uuid`
+#     if echo "$info" | grep -q "Connected: yes"; then
+# 		devices=$(echo "$info" | grep Name | xargs)
+# 		msg=""
+# 		read -a strarr <<< "$devices"
+# 		temp=""
+# 		for val in "${strarr[@]}";
+# 		do
+# 			if ! echo "$val" | grep -q "Name"; then 
+# 				temp+="$val "
+# 			fi
+# 		done
+#     fi
+# 	msg+=$(echo "$temp" | xargs)
+# 	msg+=", "
+# 	temp2=$(echo "$msg" | xargs)
+# 	modified=${temp2::-1}
+# 	echo "<fc=#157dad><fn=1></fn> $modified</fc>"
+# done
+#
+
+x=$(bluetoothctl info | grep Name: | xargs | cut -f2- -d' ')
+[[ !  -z  "${x// }"  ]] && msg=$x
+
+echo "<fc=#157dad><fn=1></fn> $msg</fc>"

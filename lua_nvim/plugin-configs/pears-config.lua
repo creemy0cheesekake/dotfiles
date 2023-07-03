@@ -1,0 +1,2 @@
+require('pears').setup()
+
