@@ -1,0 +1,23 @@
+#! /bin/bash
+
+if test -f /tmp/airstatus.out; then
+	info="$(tail -1 /tmp/airstatus.out)"
+	info=$(echo "${info//false/False}")
+	info=$(echo "${info//true/True}")
+	info=$(echo "'$info'")
+	echo $(python << EOF
+d=eval($info)
+f=d['charge']
+# print(d)
+ll=f["left"]
+rr=f["right"]
+lc='#1da7de'
+rc='#1da7de'
+if ll < 20: lc='#ffc0cb'
+if rr < 20: rc='#ffc0cb'
+if d['charging_left']: lc='#ffff00'
+if d['charging_right']: rc='#ffff00'
+print(f' L: <fc={lc}>{ll}</fc> R: <fc={rc}>{rr}</fc>')
+EOF
+)
+fi

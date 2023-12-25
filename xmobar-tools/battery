@@ -10,12 +10,14 @@ VALUE=`acpi -b | tail -1 | sed s/%.*$// | sed 's/^.*\s//'`
 CHARGING=`acpi | grep -v 'rate information unavailable' | tail -c +12 | head -c 1`
 
 # Calculate colour
+lowBat=""
 if [ "$CHARGING" == "C" ]; then
     COLOUR="yellow"
 fi
 if [ "$VALUE" -le "20" ]; then
 	if [ "$CHARGING" != "C" ]; then
 		COLOUR="pink"
+		lowBat="!------------------------------------------------------------!"
 	fi
 	COLOUR="<fc=$COLOUR> $VALUE%</fc>"
 else
@@ -26,4 +28,4 @@ else
 fi
 
 # Format and print
-echo "$COLOUR"
+echo "$lowBat$COLOUR"

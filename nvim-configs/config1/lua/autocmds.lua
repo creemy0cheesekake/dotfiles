@@ -51,7 +51,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 		vim.keymap.set(
 			"n",
 			run_map,
-			':execute "wa | !g++ %:p -o %:p:h/_%:t:r -lm && exec %:p:h/_%:t:r"<CR>',
+			':execute "wa | !g++ -g %:p -o %:p:h/_%:t:r -lm && exec %:p:h/_%:t:r"<CR>',
 			{ noremap = true }
 		)
 	end,

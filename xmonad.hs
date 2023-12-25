@@ -177,9 +177,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --
     -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
-    -- Quit xmonad
-    , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
-
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; killall xmobar; xmonad --restart")
 
@@ -237,7 +234,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- which denotes layout choice.
 -- 
 myLayout = spacing 10 ( avoidStruts ( smartBorders ( tabbed shrinkText tabConfig ||| tiled ||| Mirror tiled ) ) )
--- myLayout = spacing 10 ( avoidStruts ( smartBorders ( tabbed shrinkText tabConfig ||| tiled ) ) )
+-- myLayout = spacing 10 ( avoidStruts ( smartBorders ( tabbed shrinkText tabConfig ||| Mirror tiled ) ) )
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = ResizableTall nmaster delta ratio []

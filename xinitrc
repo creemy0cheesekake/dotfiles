@@ -41,6 +41,10 @@
 #
 # start some nice programs
 
+if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -le 3 ]; then
+  exec startx
+fi
+
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
   [ -x "$f" ] && . "$f"

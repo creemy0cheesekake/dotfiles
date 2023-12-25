@@ -19,6 +19,8 @@ return require("packer").startup(function()
 	use("williamboman/mason-lspconfig.nvim")
 	use("neovim/nvim-lspconfig")
 	use("mfussenegger/nvim-dap")
+	use("jay-babu/mason-nvim-dap.nvim")
+	use("rcarriga/nvim-dap-ui")
 
 	-- code completion
 	use("hrsh7th/cmp-nvim-lsp")

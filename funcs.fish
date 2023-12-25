@@ -34,6 +34,7 @@ function uz
     set file ""
     set o "0"
     set d "0"
+    set c "0"
     for i in $argv
         if echo $i | grep "^-"
             if echo $i | grep "o"
@@ -41,6 +42,9 @@ function uz
             end
             if echo $i | grep "d"
                 set d "1"
+            end
+            if echo $i | grep "c"
+                set c "1"
             end
         else
             set file "$file $i"
@@ -60,7 +64,11 @@ function uz
         eval "find '$name' -empty -type d -delete"
     end
     if test $d = 1
-        rm $file
+        tp $file
+    end
+    if test $c = 1
+        set name (echo $file | sed 's/\.[^.]*$//')
+		cd $name
     end
     eval "find ./ -empty -type d -delete"
 end
@@ -78,7 +86,7 @@ end
 
 function p
     set branch (git branch | sed -n -e 's/^\* \(.*\)/\1/p')
-    if test -n "$branch"
+    if not test -n "$branch"
         set branch $1
     end
 
@@ -124,7 +132,7 @@ end
 # funcsave tsi
 
 function mkcdir -a dir
-    mkdir "$dir"
+    mkdir -p "$dir"
     cd "$dir"
 end
 # funcsave mkcdir

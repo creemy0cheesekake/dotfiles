@@ -73,7 +73,7 @@ vim.keymap.set("n", "<Leader>f", "<Esc>:ALEFix<CR>", { noremap = true, silent = 
 
 -- C-/ to comment
 vim.keymap.set("n", "<C-_>", "<Plug>(comment_toggle_linewise_current)", { noremap = true, silent = true })
-vim.keymap.set("v", "<C-_>", "<Plug>(comment_toggle_linewise_visual)", { noremap = true, silent = true })
+vim.keymap.set("v", "<C-_>", "<Plug>(comment_toggle_linewise_visual)gv", { noremap = true, silent = true })
 
 -- open nvimtree
 vim.keymap.set("n", "<A-e>", "<Esc>:NvimTreeToggle %:p:h<CR>", { noremap = true, silent = true })
