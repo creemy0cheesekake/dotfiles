@@ -3,6 +3,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local build_and_run_map = "<leader>rr"
 local build_map = "<leader>rb"
 
+-- set run commands
 autocmd("FileType", {
   pattern = {"c"},
 	callback = function()
@@ -87,4 +88,12 @@ autocmd("FileType", {
 			{ noremap = true }
 		)
 	end,
+})
+
+
+-- set filetypes
+-- autocmd("BufNewFile,BufRead", {
+autocmd({"BufNewFile","BufRead"}, {
+  pattern = {"*xmobar*"},
+  command = "setfiletype haskell",
 })
