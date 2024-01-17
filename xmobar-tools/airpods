@@ -113,7 +113,7 @@ def is_flipped(raw):
 
 
 def run():
-    f = open('/tmp/airstatus.out', "r+")
+    f = open('/tmp/airstatus.out', "a+")
     if bool(subprocess.run(
             ["bluetoothctl info '30:D8:75:1A:30:AA' | grep 'Connected: yes'"], shell=True, capture_output=True, text=True).stdout):
         data = get_data()
@@ -131,6 +131,7 @@ def run():
             if data['charging_right']:
                 rc = '#ffff00'
             output = f' L: <fc={lc}>{ll}</fc> R: <fc={rc}>{rr}</fc>'
+            print(output)
             f.write(output+"\n")
         lines = f.readlines()
         if len(lines):
