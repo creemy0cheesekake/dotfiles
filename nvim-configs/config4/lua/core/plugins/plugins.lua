@@ -6,6 +6,7 @@ return {
 	require("core.plugins.config.devicons"),
 	require("core.plugins.config.indentline"),
 	require("core.plugins.config.dressing"),
+	require("core.plugins.config.linefly"),
 	-- --------------------------------- LSP -------------------------------- --
 	require("core.plugins.config.nvim-cmp"),
 	require("core.plugins.config.lspconfig"),
@@ -20,4 +21,10 @@ return {
 	require("core.plugins.config.whichkey"),
 	require("core.plugins.config.jaq"),
 	require("core.plugins.config.comment"),
+	require("core.plugins.config.nvim-surround"),
+	-- -------------------------------- Debug ------------------------------- --
+	require("core.plugins.config.mason-nvim-dap"),
+	require("core.plugins.config.nvim-dap"),
+	require("core.plugins.config.nvim-dap-ui"),
+	require("core.plugins.config.nvim-dap-virtual-text"),
 }

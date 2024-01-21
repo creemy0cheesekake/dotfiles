@@ -75,13 +75,13 @@ map("x", "p", 'p:let @+=@0<CR>:let @"=@0<CR>', s_opts)
 
 -- Comment
 map("n", "<C-/>", "<Plug>(comment_toggle_linewise_current)")
-map("v", "<C-/>", "<Plug>(comment_toggle_linewise_visual)gv")
+map("v", "<C-/>", "<Plug>(comment_toggle_linewise_visual)")
 
 -- nvimtree
 -- toggle
-map("n", "<C-n>", "<cmd> NvimTreeToggle %:p:h <CR>")
+map("n", "<C-n>", "<cmd> NvimTreeToggle %:p:h<CR>")
 -- focus
-map("n", "<leader>e", "<cmd> NvimTreeFocus <CR>")
+map("n", "<leader>e", "<cmd> NvimTreeFocus<CR>")
 
 -- whichkey
 map("n", "<leader>wK", function()

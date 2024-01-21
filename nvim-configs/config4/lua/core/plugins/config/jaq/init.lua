@@ -15,14 +15,14 @@ function M.config()
 			-- Uses shell commands
 			external = {
 				markdown = "glow %",
-				python = "python3 %",
+				python = "python $filePath",
 				javascript = "node %",
 			},
 		},
 
 		behavior = {
 			-- Default type
-			default = "bang",
+			default = "float",
 
 			-- Start in insert mode
 			startinsert = false,
@@ -31,7 +31,7 @@ function M.config()
 			wincmd = false,
 
 			-- Auto-save files
-			autosave = false,
+			autosave = true,
 		},
 
 		ui = {

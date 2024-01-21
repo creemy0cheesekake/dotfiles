@@ -13,6 +13,7 @@ function M.config()
 			null_ls.builtins.formatting.prettier,
 			null_ls.builtins.formatting.autopep8,
 			null_ls.builtins.formatting.stylua,
+			null_ls.builtins.formatting.shfmt,
 		},
 		on_attach = function(client, bufnr)
 			if client.supports_method("textDocument/formatting") then
