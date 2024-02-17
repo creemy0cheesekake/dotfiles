@@ -15,13 +15,14 @@ function M.config()
 	local cmp = require("cmp")
 	local luasnip = require("luasnip")
 	require("luasnip.loaders.from_vscode").lazy_load()
+	require("luasnip.loaders.from_snipmate").lazy_load({ paths = "~/.config/nvim/snippets" })
 	cmp.setup({
 		completion = {
 			completeopt = "menu,menuone,preview,noselect",
 		},
 		snippet = {
 			expand = function(args)
-				require("luasnip").lsp_expand(args.body)
+				luasnip.lsp_expand(args.body)
 			end,
 		},
 
@@ -37,7 +38,7 @@ function M.config()
 				select = true,
 			}),
 			["<Tab>"] = cmp.mapping(function(fallback)
-				if require("luasnip").expand_or_jumpable() then
+				if luasnip.expand_or_jumpable() then
 					vim.fn.feedkeys(
 						vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true),
 						""
@@ -52,7 +53,7 @@ function M.config()
 				"s",
 			}),
 			["<S-Tab>"] = cmp.mapping(function(fallback)
-				if require("luasnip").jumpable(-1) then
+				if luasnip.jumpable(-1) then
 					vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
 				elseif cmp.visible() then
 					cmp.select_prev_item()

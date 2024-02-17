@@ -34,3 +34,7 @@ alias bc="bc -l"
 alias clearcpy="echo '' | cpy"
 alias mkdir="mkdir -p"
 alias dict="sdcv"
+alias jpnb="jupyter notebook"
+alias cleansedirname='rename "s/ /_/g"'
+alias cd='z'
+alias cdi='zi'

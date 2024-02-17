@@ -24,10 +24,10 @@ function gc -a url two three
 end
 # funcsave gc
 
-function zip
-    set dir (echo $argv | sed 's:/*$::')
-    eval "7z a '$dir.zip' '$dir'"
-end
+# function zip
+#     set dir (echo $argv | sed 's:/*$::')
+#     eval "7z a '$dir.zip' '$dir'"
+# end
 # funcsave zip
 
 function uz
@@ -146,10 +146,10 @@ function massmv
 end
 # funcsave massmv
 
-function cd
-    builtin cd $argv && ls
-end
-# funcsave cd
+# function cd
+# 	z $argv && ls
+# end
+# # funcsave cd
 
 function create-svelte
     set name ""
@@ -197,3 +197,11 @@ function toggletapping
 end
 # funcsave toggletapping
 
+function switchmouse
+	if xmodmap -pp | head -5 | tail -1 | grep 3
+		xinput set-button-map "Bluetooth Mouse M557 Mouse" 1 2 3
+	else
+		xinput set-button-map "Bluetooth Mouse M557 Mouse" 3 2 1
+	end
+end
+# funcsave switchmouse

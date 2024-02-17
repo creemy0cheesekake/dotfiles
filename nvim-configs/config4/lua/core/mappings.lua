@@ -25,6 +25,10 @@ map("n", "<C-l>", "<C-w>l")
 map("n", "<C-j>", "<C-w>j")
 map("n", "<C-k>", "<C-w>k")
 
+-- switch tabs
+map("n", "<Tab>", "gt")
+map("n", "<A-Tab>", "gT")
+
 -- save
 map("n", "<C-s>", "<cmd> w <CR>")
 
