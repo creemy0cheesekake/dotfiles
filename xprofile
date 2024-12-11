@@ -1,0 +1,30 @@
+# Keyboard Layout
+setxkbmap us &
+
+# Disable tap to click on touchpad
+xinput --set-prop 'DELL0A75:00 06CB:7A13 Touchpad' 'libinput Tapping Enabled' 0
+
+# Natural scrolling on trackpad
+xinput --set-prop 'DELL0A75:00 06CB:7A13 Touchpad' 'libinput Natural Scrolling Enabled' 1
+
+# Decrease Mouse Sensitivity
+xinput --set-prop 'Compx 2.4G Receiver Mouse' 'libinput Accel Speed' -1
+xinput --set-prop 'Bluetooth Mouse M557 Mouse' 'libinput Accel Speed' -0.75
+
+# Increase Touchpad Sensitivity
+xinput --set-prop 'DELL0A75:00 06CB:7A13 Touchpad' 'libinput Accel Speed' .2
+
+# Set Compose Key to Right Alt
+setxkbmap -option compose:ralt
+
+# Remap Caps Lock to Esc and F12 to Caps Lock
+xmodmap ~/.config/xmodmap/xmodmap && xmodmap -e 'clear lock'
+
+# wallpaper
+nitrogen --restore &
+
+# Compositor
+picom -f -D 5 &
+
+# Enable AirPods Media Control
+mpris-proxy &

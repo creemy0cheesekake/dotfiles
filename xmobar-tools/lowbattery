@@ -1,0 +1,24 @@
+#! /bin/bash
+
+# A better method; requires the acpi package
+
+# Get percentage
+VALUE=$(acpi -b | tail -1 | sed s/%.*$// | sed 's/^.*\s//')
+
+# Get charging status ("C"=charging, "D"=dischaging)
+# CHARGING=`acpi | tail -c +12 | head -c 1`
+CHARGING=$(acpi | grep -v 'rate information unavailable' | tail -c +12 | head -c 1)
+# Calculate colour
+# if [ "$CHARGING" != "C" ]; then
+if [ "$VALUE" -le "50" ]; then
+	# DBUS_SESSION_BUS_ADDRESS=unix:path=/tmp/dbus-dvbeMMUe0D,guid=fa5fd8fa843023ea43c0fe2164c02d19 notify-send -u critical "BATTERY LOW" "20%"
+	# notify-send -u critical "BATTERY LOW" "20%"
+	/usr/bin/notify-send "low battery" "$(acpi -b)"
+elif [ "$VALUE" -le "15" ]; then
+	# DBUS_SESSION_BUS_ADDRESS=unix:path=/tmp/dbus-dvbeMMUe0D,guid=fa5fd8fa843023ea43c0fe2164c02d19 notify-send -u critical "BATTERY LOW" "15%"
+	notify-send -u critical "BATTERY LOW" "15%"
+elif [ "$VALUE" -le "10" ]; then
+	# DBUS_SESSION_BUS_ADDRESS=unix:path=/tmp/dbus-dvbeMMUe0D,guid=fa5fd8fa843023ea43c0fe2164c02d19 notify-send -u critical "BATTERY LOW" "10%"
+	notify-send -u critical "BATTERY LOW" "10%"
+fi
+# fi

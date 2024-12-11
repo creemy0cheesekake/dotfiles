@@ -1,0 +1,25 @@
+#! /bin/sh
+
+titleMaxLength=30
+artistMaxLength=30
+
+# running = artist || album
+running=$([ "$(playerctl metadata artist)" != "" ] && playerctl metadata artist || playerctl metadata album)
+
+if [ "$running" != "" ]; then
+	# trim to max length
+	artist=$(echo "$running" | cut -c 1-$artistMaxLength)
+	song=$(playerctl metadata title | cut -c 1-$titleMaxLength)
+
+	# if the trimmed artist name isnt the original; i.e. if the artist name is too long
+	if [ "$artist" != "$running" ]; then
+		artist=$(echo "$running" | cut -c 1-$(($artistMaxLength - 3)))"..."
+	fi
+
+	# if the trimmed song name isnt the original; i.e. if the title is too long
+	if [ "$song" != "$(playerctl metadata title)" ]; then
+		song=$(playerctl metadata title | cut -c 1-$(($titleMaxLength - 3)))"..."
+	fi
+
+	echo " <fc=#1db954><fn=1></fn> $artist · $song</fc> |"
+fi

@@ -1,0 +1,36 @@
+-- Config { font = "xft:Roboto Mono:pixelsize=12:antialias=true:hinting=true"
+Config { font = "Roboto Mono 9"
+       , additionalFonts = ["Jet Brains Mono Nerd Font 12"]
+       , bgColor = "#140e01"
+       , fgColor = "#b389d9"
+       , alpha = 230
+       , position = BottomH 50
+       , textOffset = -1
+       , iconOffset = -1
+       , lowerOnStart = False
+       , pickBroadest = True
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [
+		    Run UnsafeStdinReader
+		    , Run Com "/home/arjun/xmobar-tools/date" [] "date" 1
+		    , Run Com "/home/arjun/xmobar-tools/cpu" [] "cpu" 600
+		    , Run Com "/home/arjun/xmobar-tools/memory" [] "memory" 100
+		    , Run Com "/home/arjun/xmobar-tools/battery" [] "battery" 10
+		    , Run Com "/home/arjun/xmobar-tools/volume" [] "volume" 2
+		    , Run Com "/home/arjun/xmobar-tools/spotify" [] "spotify" 50
+		    , Run Com "/home/arjun/xmobar-tools/pacman-updates" [] "pacman-updates" 600
+		    , Run Com "/home/arjun/xmobar-tools/bluetooth" [] "bluetooth" 10
+		    , Run Com "/home/arjun/xmobar-tools/brightness" [] "brightness" 10
+		    , Run Com "/home/arjun/xmobar-tools/wifi" [] "wifi" 30
+		    , Run Com "/home/arjun/xmobar-tools/testwifi" [] "testwifi" 30
+		    , Run Com "/home/arjun/xmobar-tools/airpods" [] "airpods" 100
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " | <action=`shutdown now`><fn=1>⏻</fn></action> | <fc=#254380><fn=1></fn> %cpu%</fc> | <fc=#5c2c96><fn=1>󰍛</fn> %memory%</fc> | <fc=#d6b031><fn=1></fn> %brightness%</fc> | <action=`[[ $(bluetoothctl info '30:D8:75:1A:30:AA' | grep 'Connected: yes') ]] && bluetoothctl disconnect '30:D8:75:1A:30:AA' || bluetoothctl connect '30:D8:75:1A:30:AA'` button=1><fc=#1da7de><fn=1>󱡏</fn> %airpods%</fc></action> | }\
+                    \{ <action=`eval $(/home/arjun/xmobar-tools/runPac)` button=1><fc=#f2d95c><fn=1></fn> %pacman-updates%</fc></action> |<action=`playerctl play-pause` button=1>%spotify%</action> <action=`eval $(alacritty -e 'bluetoothctl' & )`>%bluetooth%</action> | <action=`pactl set-sink-mute @DEFAULT_SINK@ toggle`><fc=#2f6d99><fn=1>󰕾</fn> %volume%</fc></action> | <fc=#2f806b><fn=1></fn> %wifi% Status: %testwifi%</fc> | <fc=#ab3737><fn=1></fn> %battery%</fc> | <fc=#ee9a00><fn=1></fn> %date%</fc> | "
+}

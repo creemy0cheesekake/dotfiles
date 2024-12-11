@@ -1,0 +1,28 @@
+#! /bin/bash
+
+data="'$(bluetoothctl devices | cut -f2 -d' ' | while read uuid; do bluetoothctl info $uuid; done | grep -e "Device\|Connected\|Name" | xargs)'"
+# echo $data
+echo $(
+	python <<EOF
+import re
+y = [i.split("Connected: ") for i in re.findall(r'Name:.+?Connected: \w+', $data)]
+res = ""
+
+counter = 0
+dev_name = ""
+for i in y:
+	if i[1] == 'yes':
+		counter += 1
+		dev_name = i[0].replace("Name: ", "").strip()
+
+if counter == 0:
+	res = "None"
+elif counter == 1:
+	res = dev_name
+else:
+	res = f"{counter} Devices"
+
+print(f"<fc=#157dad><fn=1></fn> {res}</fc>")
+
+EOF
+)

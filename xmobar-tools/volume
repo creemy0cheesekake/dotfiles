@@ -1,0 +1,9 @@
+#! /bin/bash
+
+VALUE=$(amixer get Master | sed s/%.*$// | sed 's/^.*\[//' | tail -n 1)
+MUTE=$(amixer get Master | grep off)
+if [ -n "$MUTE" ]; then
+	echo "<fc=red>$VALUE%</fc>"
+else
+	echo "$VALUE%"
+fi

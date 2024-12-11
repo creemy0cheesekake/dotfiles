@@ -1,0 +1,31 @@
+#! /bin/bash
+
+# A better method; requires the acpi package
+
+# Get percentage
+VALUE=$(acpi -b | tail -1 | sed s/%.*$// | sed 's/^.*\s//')
+
+# Get charging status ("C"=charging, "D"=dischaging)
+# CHARGING=`acpi | tail -c +12 | head -c 1`
+CHARGING=$(acpi | grep -v 'rate information unavailable' | tail -c +12 | head -c 1)
+
+# Calculate colour
+lowBat=""
+if [ "$CHARGING" == "C" ]; then
+	COLOUR="yellow"
+fi
+if [ "$VALUE" -le "20" ]; then
+	if [ "$CHARGING" != "C" ]; then
+		COLOUR="pink"
+		lowBat="!------------------------------------------------------------!"
+	fi
+	COLOUR="<fc=$COLOUR> $VALUE%</fc>"
+else
+	COLOUR=" $VALUE%"
+	if [ "$CHARGING" == "C" ] || [ "$VALUE" == "100" ]; then
+		COLOUR="<fc=yellow> $VALUE%</fc>"
+	fi
+fi
+
+# Format and print
+echo "$lowBat$COLOUR"

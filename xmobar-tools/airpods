@@ -1,0 +1,21 @@
+#! /bin/bash
+
+if test -f /tmp/airstatus.out; then
+	info="'$(tail -1 /tmp/airstatus.out)'"
+	echo $(
+		python <<EOF
+import json
+d=json.loads($info)
+f=d['charge']
+l=f["left"]
+r=f["right"]
+lc='#1da7de'
+rc='#1da7de'
+if l < 20: lc='#ffc0cb'
+if r < 20: rc='#ffc0cb'
+if d['charging_left']: lc='#ffff00'
+if d['charging_right']: rc='#ffff00'
+print(f' L: <fc={lc}>{l}</fc> R: <fc={rc}>{r}</fc>')
+EOF
+	)
+fi

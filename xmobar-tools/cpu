@@ -1,0 +1,3 @@
+#!/bin/bash
+
+printf "%s%s" "$(mpstat | tail -1 | awk '{print $4}' | awk '{print int($1+0.5)}')" "%"
