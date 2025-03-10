@@ -1,6 +1,10 @@
 local M = {
 	"nvimtools/none-ls.nvim",
-	dependencies = "nvim-lua/plenary.nvim",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"nvimtools/none-ls-extras.nvim",
+
+	},
 }
 
 function M.config()
@@ -15,8 +19,8 @@ function M.config()
 					"astro",
 				},
 			}),
-			-- null_ls.builtins.formatting.autopep8,
-			null_ls.builtins.formatting.black.with({ extra_args = { "--line-length", "120" } }),
+			require("none-ls.formatting.autopep8"),
+			-- null_ls.builtins.formatting.black.with({ extra_args = { "--line-length", "120" } }),
 			null_ls.builtins.formatting.stylua.with({ extra_filetypes = { "lua" } }),
 			null_ls.builtins.formatting.shfmt,
 		},

@@ -15,7 +15,6 @@ map("i", "<C-h>", "<Left>")
 map("i", "<C-l>", "<Right>")
 map("i", "<C-j>", "<Down>")
 map("i", "<C-k>", "<Up>")
-map("i", "<C-h>", "<C-w>")
 
 ---------- normal mode  ----------
 map("n", "<Esc>", ":noh <CR>")
@@ -78,8 +77,16 @@ map("x", "p", 'p:let @+=@0<CR>:let @"=@0<CR>', s_opts)
 ---------- Plugin Maps ----------
 
 -- Comment
-map("n", "<C-/>", "<Plug>(comment_toggle_linewise_current)")
-map("v", "<C-/>", "<Plug>(comment_toggle_linewise_visual)")
+map(
+	"n",
+	"<C-/>",
+	':lua vim.opt.commentstring = require("ts_context_commentstring.internal").calculate_commentstring()<CR>:CommentToggle<CR>'
+)
+map(
+	"v",
+	"<C-/>",
+	':lua vim.opt.commentstring = require("ts_context_commentstring.internal").calculate_commentstring()<CR>gv:CommentToggle<CR>'
+)
 
 -- nvimtree
 -- toggle

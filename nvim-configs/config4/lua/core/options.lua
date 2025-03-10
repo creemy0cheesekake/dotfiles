@@ -4,7 +4,7 @@ local g = vim.g
 opt.laststatus = 3 -- global statusline
 opt.showmode = false
 
-opt.backspace='indent,eol,start'
+opt.backspace = "indent,eol,start"
 
 opt.clipboard = "unnamedplus"
 opt.cursorline = true
@@ -28,7 +28,7 @@ opt.numberwidth = 2
 opt.ruler = false
 
 -- disable nvim intro
-opt.shortmess:append "sI"
+opt.shortmess:append("sI")
 
 opt.signcolumn = "yes"
 opt.splitbelow = true
@@ -36,14 +36,13 @@ opt.splitright = true
 opt.termguicolors = true
 opt.timeoutlen = 400
 opt.undofile = true
-opt.undodir = vim.fn.expand('~/.config/nvim/undodir')
+opt.undodir = vim.fn.expand("~/.config/nvim/undodir")
 
 -- interval for writing swap file to disk, also used by gitsigns
 opt.updatetime = 250
 
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
-opt.whichwrap:append "<>[]hl"
+opt.whichwrap:append("<>[]hl")
 
 g.mapleader = " "
-

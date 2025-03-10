@@ -8,6 +8,7 @@ return {
 	require("core.plugins.config.dressing"),
 	require("core.plugins.config.linefly"),
 	require("core.plugins.config.nvim-colorizer"),
+	require("core.plugins.config.true-zen"),
 	-- --------------------------------- LSP -------------------------------- --
 	require("core.plugins.config.nvim-cmp"),
 	require("core.plugins.config.lspconfig"),
@@ -21,7 +22,7 @@ return {
 	require("core.plugins.config.autopairs"),
 	require("core.plugins.config.whichkey"),
 	require("core.plugins.config.jaq"),
-	require("core.plugins.config.comment"),
+	require("core.plugins.config.nvim-comment"),
 	require("core.plugins.config.nvim-ts-comment-commentstring"),
 	require("core.plugins.config.nvim-surround"),
 	-- -------------------------------- Debug ------------------------------- --

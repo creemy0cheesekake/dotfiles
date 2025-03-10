@@ -17,5 +17,12 @@ source $ZDOTDIR/aliases.zsh
 source $ZDOTDIR/funcs.zsh
 eval "$(zoxide init zsh)"
 
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+
 source ~/.zsh/git-prompt.zsh/git-prompt.zsh
 source ~/.zsh/git-prompt.zsh/custom_prompt.zsh
+
+export PATH=/opt/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/opt/cuda/lib64:$LD_LIBRARY_PATH
