@@ -1,3 +1,5 @@
+[init]
+    defaultBranch = main
 [user]
 	email = arjunanand1405@gmail.com
 	name = creemy0cheesekake
@@ -5,3 +7,4 @@
 	helper = store
 [core]
 	editor = nvim
+    autocrlf = input

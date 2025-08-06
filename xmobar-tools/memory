@@ -4,4 +4,15 @@ total=$(free --mega | tail -2 | head -1 | awk '{print $2}')
 used=$(free --mega | tail -2 | head -1 | awk '{print $3}')
 p=$((used * 100 / total))
 
-printf "%s%s (%s%s)" "$p" "%" "$used" "M"
+if [ "$p" -gt 75 ]; then
+	color="red"
+	formatted="<fc=red>$p%</fc>"
+elif [ "$p" -gt 50 ]; then
+	formatted="<fc=#ff6f00>$p%</fc>"
+elif [ "$p" -gt 25 ]; then
+	formatted="<fc=#ba9b1e>$p%</fc>"
+else
+	formatted="$p%"
+fi
+
+printf "%s (%sM)\n" "$formatted" "$used"

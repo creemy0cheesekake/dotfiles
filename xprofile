@@ -1,6 +1,9 @@
 # Keyboard Layout
 setxkbmap us &
 
+# set monitor position to the left
+autorandr monitor
+
 # Disable tap to click on touchpad
 xinput --set-prop 'DELL0A75:00 06CB:7A13 Touchpad' 'libinput Tapping Enabled' 0
 
@@ -18,7 +21,10 @@ xinput --set-prop 'DELL0A75:00 06CB:7A13 Touchpad' 'libinput Accel Speed' .2
 setxkbmap -option compose:ralt
 
 # Remap Caps Lock to Esc and F12 to Caps Lock
-xmodmap ~/.config/xmodmap/xmodmap && xmodmap -e 'clear lock'
+# xmodmap ~/.config/xmodmap/xmodmap && xmodmap -e 'clear lock'
+
+# make bluetooth stop asking to authorize service
+bt-agent --capability=NoInputNoOutput &
 
 # wallpaper
 nitrogen --restore &

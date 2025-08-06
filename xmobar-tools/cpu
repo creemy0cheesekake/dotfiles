@@ -1,3 +1,15 @@
 #!/bin/bash
 
-printf "%s%s" "$(mpstat | tail -1 | awk '{print $4}' | awk '{print int($1+0.5)}')" "%"
+p=$(mpstat | tail -1 | awk '{print $4}' | awk '{print int($1+0.5)}')
+
+if [ "$p" -gt 75 ]; then
+	formatted="<fc=red> $p%</fc>"
+elif [ "$p" -gt 50 ]; then
+	formatted="<fc=#ff6f00> $p%</fc>"
+elif [ "$p" -gt 25 ]; then
+	formatted="<fc=#ba9b1e> $p%</fc>"
+else
+	formatted=" $p%"
+fi
+
+echo "$formatted"

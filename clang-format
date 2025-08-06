@@ -25,8 +25,10 @@ BinPackParameters: false
 BreakBeforeTernaryOperators: true
 ColumnLimit: 0
 DerivePointerAlignment: false
+FixNamespaceComments: false 
 IndentAccessModifiers: false
 IndentWidth: 4
+InsertBraces: true
 Language: Cpp
 PointerAlignment: Right
 ReflowComments: false
@@ -37,11 +39,10 @@ SpaceAfterLogicalNot: false
 SpaceBeforeParens: ControlStatements
 SpaceBeforeRangeBasedForLoopColon: true
 SpaceInEmptyParentheses: false
-SpacesInContainerLiterals: false
 SpacesInCStyleCastParentheses: false
+SpacesInContainerLiterals: false
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
 TabWidth: 4
 UseTab: Always
-FixNamespaceComments: false 
 ...

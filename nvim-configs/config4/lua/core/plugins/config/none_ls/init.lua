@@ -3,7 +3,6 @@ local M = {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvimtools/none-ls-extras.nvim",
-
 	},
 }
 

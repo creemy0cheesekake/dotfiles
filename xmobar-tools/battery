@@ -1,31 +1,17 @@
 #! /bin/bash
 
-# A better method; requires the acpi package
+UPOWER_OUTPUT=$(upower -i /org/freedesktop/UPower/devices/battery_BAT1)
+PERCENTAGE=$(echo "$UPOWER_OUTPUT" | grep percentage | awk '{print $NF}')
+CHARGING=$(echo "$UPOWER_OUTPUT" | grep state | awk '{print $NF}')
 
-# Get percentage
-VALUE=$(acpi -b | tail -1 | sed s/%.*$// | sed 's/^.*\s//')
-
-# Get charging status ("C"=charging, "D"=dischaging)
-# CHARGING=`acpi | tail -c +12 | head -c 1`
-CHARGING=$(acpi | grep -v 'rate information unavailable' | tail -c +12 | head -c 1)
-
-# Calculate colour
-lowBat=""
-if [ "$CHARGING" == "C" ]; then
-	COLOUR="yellow"
-fi
-if [ "$VALUE" -le "20" ]; then
-	if [ "$CHARGING" != "C" ]; then
-		COLOUR="pink"
-		lowBat="!------------------------------------------------------------!"
-	fi
-	COLOUR="<fc=$COLOUR> $VALUE%</fc>"
-else
-	COLOUR=" $VALUE%"
-	if [ "$CHARGING" == "C" ] || [ "$VALUE" == "100" ]; then
-		COLOUR="<fc=yellow> $VALUE%</fc>"
-	fi
+# Calculate color
+LOW_BATTERY_WARNING=""
+if [ "$CHARGING" != "discharging" ]; then
+	COLOR="yellow"
+elif [ "${PERCENTAGE//%/}" -le "20" ]; then
+	COLOR="pink"
+	LOW_BATTERY_WARNING="!------------------------------------------------------------!"
 fi
 
 # Format and print
-echo "$lowBat$COLOUR"
+echo "$LOW_BATTERY_WARNING<fc=$COLOR> $PERCENTAGE</fc>"

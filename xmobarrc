@@ -16,17 +16,17 @@ Config { font = "Roboto Mono 9"
        , overrideRedirect = True
        , commands = [
 		    Run UnsafeStdinReader
-		    , Run Com "/home/arjun/xmobar-tools/date" [] "date" 1
+		    , Run Com "/home/arjun/xmobar-tools/date" [] "date" 10
 		    , Run Com "/home/arjun/xmobar-tools/cpu" [] "cpu" 600
 		    , Run Com "/home/arjun/xmobar-tools/memory" [] "memory" 100
-		    , Run Com "/home/arjun/xmobar-tools/battery" [] "battery" 10
+		    , Run Com "/home/arjun/xmobar-tools/battery" [] "battery" 100
 		    , Run Com "/home/arjun/xmobar-tools/volume" [] "volume" 2
 		    , Run Com "/home/arjun/xmobar-tools/spotify" [] "spotify" 50
 		    , Run Com "/home/arjun/xmobar-tools/pacman-updates" [] "pacman-updates" 600
-		    , Run Com "/home/arjun/xmobar-tools/bluetooth" [] "bluetooth" 10
-		    , Run Com "/home/arjun/xmobar-tools/brightness" [] "brightness" 10
-		    , Run Com "/home/arjun/xmobar-tools/wifi" [] "wifi" 30
-		    , Run Com "/home/arjun/xmobar-tools/testwifi" [] "testwifi" 30
+		    , Run Com "/home/arjun/xmobar-tools/bluetooth" [] "bluetooth" 100
+		    , Run Com "/home/arjun/xmobar-tools/brightness" [] "brightness" 100
+		    , Run Com "/home/arjun/xmobar-tools/wifi" [] "wifi" 50
+		    , Run Com "/home/arjun/xmobar-tools/testwifi" [] "testwifi" 50
 		    , Run Com "/home/arjun/xmobar-tools/airpods" [] "airpods" 100
                     ]
        , sepChar = "%"

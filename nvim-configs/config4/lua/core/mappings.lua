@@ -77,16 +77,8 @@ map("x", "p", 'p:let @+=@0<CR>:let @"=@0<CR>', s_opts)
 ---------- Plugin Maps ----------
 
 -- Comment
-map(
-	"n",
-	"<C-/>",
-	':lua vim.opt.commentstring = require("ts_context_commentstring.internal").calculate_commentstring()<CR>:CommentToggle<CR>'
-)
-map(
-	"v",
-	"<C-/>",
-	':lua vim.opt.commentstring = require("ts_context_commentstring.internal").calculate_commentstring()<CR>gv:CommentToggle<CR>'
-)
+map("n", "<C-/>", ":CommentToggle<CR>")
+map("v", "<C-/>", ":CommentToggle<CR>")
 
 -- nvimtree
 -- toggle
@@ -139,13 +131,20 @@ map("n", "<leader>td", function()
 	require("gitsigns").toggle_deleted()
 end)
 
--- dap
-map("n", "<leader>db", "<cmd> DapToggleBreakpoint <CR>")
-map("n", "<F9>", "<cmd> DapContinue <CR>")
+-- dap debugger
+map(
+	"n",
+	"<leader>dd",
+	'<cmd>lua local dap, dapui = require("dap"), require("dapui"); dapui.setup(); dapui.toggle();<CR>',
+	s_opts
+)
+map("n", "<leader>db", "<cmd>lua require('persistent-breakpoints.api').toggle_breakpoint()<CR>", s_opts)
+map("n", "<leader>dk", "<cmd> DapContinue <CR>")
 map("n", "<leader>dt", "<cmd> DapTerminate <CR>")
-map("n", "<F10>", "<cmd> DapStepInto <CR>")
-map("n", "<F11>", "<cmd> DapStepOver <CR>")
-map("n", "<F8>", "<cmd> DapStepOut <CR>")
+map("n", "<leader>dl", "<cmd> DapStepInto <CR>")
+map("n", "<leader>dj", "<cmd> DapStepOver <CR>")
+map("n", "<leader>dh", "<cmd> DapStepOut <CR>")
+map("n", "<leader>dcb", "<cmd>lua require('persistent-breakpoints.api').clear_all_breakpoints()<CR>", s_opts)
 
 -- jaq
 map("n", "<leader>rr", "<cmd>Jaq<CR>")

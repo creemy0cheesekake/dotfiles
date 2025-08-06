@@ -9,6 +9,7 @@ return {
 	require("core.plugins.config.linefly"),
 	require("core.plugins.config.nvim-colorizer"),
 	require("core.plugins.config.true-zen"),
+	require("core.plugins.config.vimade"),
 	-- --------------------------------- LSP -------------------------------- --
 	require("core.plugins.config.nvim-cmp"),
 	require("core.plugins.config.lspconfig"),
@@ -25,9 +26,11 @@ return {
 	require("core.plugins.config.nvim-comment"),
 	require("core.plugins.config.nvim-ts-comment-commentstring"),
 	require("core.plugins.config.nvim-surround"),
+	require("core.plugins.config.commentless"),
 	-- -------------------------------- Debug ------------------------------- --
 	require("core.plugins.config.mason-nvim-dap"),
 	require("core.plugins.config.nvim-dap"),
 	require("core.plugins.config.nvim-dap-ui"),
 	require("core.plugins.config.nvim-dap-virtual-text"),
+	require("core.plugins.config.persistent-breakpoints"),
 }

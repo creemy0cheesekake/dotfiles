@@ -1,8 +1,11 @@
 local opt = vim.opt
 local g = vim.g
 
-opt.laststatus = 3 -- global statusline
+opt.laststatus = 2 -- statusline for each split
 opt.showmode = false
+vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "white" })
+vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#95939e" })
+vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#95939e" })
 
 opt.backspace = "indent,eol,start"
 

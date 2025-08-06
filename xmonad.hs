@@ -86,7 +86,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- not working
     , ((shiftMask, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -1%")
-	-- working
+    -- working
     , ((shiftMask, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +1%")
 
     -- brightness keys
@@ -240,7 +240,7 @@ myLayout = spacing 10 ( avoidStruts ( smartBorders ( tabbed shrinkText tabConfig
      tiled   = ResizableTall nmaster delta ratio []
 
      -- The default number of windows in the master pane
-     nmaster = 2
+     nmaster = 1
 
      -- Default proportion of screen occupied by master pane
      ratio   = 1/2
@@ -306,6 +306,7 @@ myStartupHook = setDefaultCursor xC_left_ptr
 --
 main = do
   xmproc <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/.xmobarrc"
+  xmproc <- spawnPipe "xmobar -x 1 $HOME/.config/xmobar/.xmobarrc"
   xmonad $ docks defaults;
 
 -- A structure containing your configuration settings, overriding

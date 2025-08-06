@@ -7,12 +7,7 @@ local build_map = "<leader>rb"
 autocmd("FileType", {
 	pattern = { "c" },
 	callback = function()
-		vim.keymap.set(
-			"n",
-			build_and_run_map,
-			':execute "wa | !gcc %:p -o %:p:h/_%:t:r -lm && exec %:p:h/_%:t:r"<CR>',
-			{ noremap = true }
-		)
+		vim.keymap.set("n", build_and_run_map, ':execute "wa | !make"<CR>', { noremap = true })
 	end,
 })
 
@@ -26,12 +21,7 @@ autocmd("FileType", {
 autocmd("FileType", {
 	pattern = { "cpp" },
 	callback = function()
-		vim.keymap.set(
-			"n",
-			build_and_run_map,
-			':execute "wa | !g++ -g %:p -o %:p:h/_%:t:r -lm && exec %:p:h/_%:t:r"<CR>',
-			{ noremap = true }
-		)
+		vim.keymap.set("n", build_and_run_map, ':execute "wa | !make"<CR>', { noremap = true })
 	end,
 })
 
@@ -66,4 +56,13 @@ autocmd("FileType", {
 autocmd({ "BufNewFile", "BufRead" }, {
 	pattern = { "*xmobar*" },
 	command = "setfiletype haskell",
+})
+
+-- general
+
+autocmd("BufEnter", {
+	pattern = { "*" },
+	callback = function()
+		vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "white" })
+	end,
 })
