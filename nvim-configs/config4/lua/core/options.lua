@@ -49,3 +49,5 @@ opt.updatetime = 250
 opt.whichwrap:append("<>[]hl")
 
 g.mapleader = " "
+g.sass_recommended_style = 0
+g.ruby_recommended_style = 0

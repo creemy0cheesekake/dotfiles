@@ -4,15 +4,41 @@ total=$(free --mega | tail -2 | head -1 | awk '{print $2}')
 used=$(free --mega | tail -2 | head -1 | awk '{print $3}')
 p=$((used * 100 / total))
 
-if [ "$p" -gt 75 ]; then
-	color="red"
-	formatted="<fc=red>$p%</fc>"
-elif [ "$p" -gt 50 ]; then
-	formatted="<fc=#ff6f00>$p%</fc>"
-elif [ "$p" -gt 25 ]; then
-	formatted="<fc=#ba9b1e>$p%</fc>"
-else
-	formatted="$p%"
-fi
+python - <<EOF
+def hex_to_rgb(hex_code):
+    hex_code = hex_code.lstrip('#')
+    return tuple(int(hex_code[i:i+2], 16) for i in (0, 2, 4))
 
-printf "%s (%sM)\n" "$formatted" "$used"
+def rgb_to_hex(rgb_tuple):
+    return '#%02x%02x%02x' % tuple(int(c) for c in rgb_tuple)
+
+def get_color_from_gradient(percentage):
+    # Define the colors
+    color_a = hex_to_rgb('#5c2c96')
+    color_b = hex_to_rgb('#f5d60f')
+    color_c = hex_to_rgb('#ff0000')
+
+    if percentage <= 50:
+        # Interpolate between color A and color B
+        normalized_percent = percentage / 50
+        r = color_a[0] + (color_b[0] - color_a[0]) * normalized_percent
+        g = color_a[1] + (color_b[1] - color_a[1]) * normalized_percent
+        b = color_a[2] + (color_b[2] - color_a[2]) * normalized_percent
+    else:
+        # Interpolate between color B and color C
+        normalized_percent = (percentage - 25.0) / 75.0
+        r = color_b[0] + (color_c[0] - color_b[0]) * normalized_percent
+        g = color_b[1] + (color_c[1] - color_b[1]) * normalized_percent
+        b = color_b[2] + (color_c[2] - color_b[2]) * normalized_percent
+
+    # Ensure values are within the 0-255 range
+    r = int(max(0, min(255, r)))
+    g = int(max(0, min(255, g)))
+    b = int(max(0, min(255, b)))
+
+    return rgb_to_hex((r, g, b))
+
+color = get_color_from_gradient($p)
+print("<fc={}>{} ({}M)</fc>\n".format(color, "$p%", "$used"))
+
+EOF

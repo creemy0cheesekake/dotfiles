@@ -7,11 +7,11 @@ CHARGING=$(echo "$UPOWER_OUTPUT" | grep state | awk '{print $NF}')
 # Calculate color
 LOW_BATTERY_WARNING=""
 if [ "$CHARGING" != "discharging" ]; then
-	COLOR="yellow"
+	COLOR="<fc=yellow>"
 elif [ "${PERCENTAGE//%/}" -le "20" ]; then
-	COLOR="pink"
+	COLOR="<fc=pink>"
 	LOW_BATTERY_WARNING="!------------------------------------------------------------!"
 fi
 
 # Format and print
-echo "$LOW_BATTERY_WARNING<fc=$COLOR> $PERCENTAGE</fc>"
+echo "$LOW_BATTERY_WARNING$COLOR $PERCENTAGE$([ -n "$COLOR" ] && echo "</fc>")"

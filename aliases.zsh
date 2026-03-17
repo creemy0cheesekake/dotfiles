@@ -4,7 +4,7 @@ alias pc='yay -S --removemake'
 alias ps='yay -Ssq'
 alias pcs='yay -s --removemake'
 alias rpc='yay -Rns'
-alias ls='eza -Alt modified --grid'
+alias ls='eza -Alr --sort=created --grid'
 alias lsc='ls -Alth --color=never'
 alias v='nvim'
 alias bin='cd /usr/local/bin'
@@ -19,7 +19,6 @@ alias mkbch='git checkout -b'
 alias tmail="tmpmail && tmpmail | grep Inbox | sed 's/.*for //' | head -c-3 | cpy s"
 alias jl="julia"
 alias tard="tar -zxvf"
-alias pdf="setsid sioyek"
 alias torrent="transmission-cli"
 alias prune="find . -empty -type d -delete "
 alias keys="xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf \"%-3s %s\n\", \$5, \$8 }'"

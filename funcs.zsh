@@ -151,3 +151,7 @@ function switchmouse {
         xinput set-button-map "Bluetooth Mouse M557 Mouse" 3 2 1
     fi
 }
+
+function pdf {
+	setsid sioyek "@" 1> /dev/null
+}

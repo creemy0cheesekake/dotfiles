@@ -34,3 +34,8 @@ picom -f -D 5 &
 
 # Enable AirPods Media Control
 mpris-proxy &
+
+# Disable automatic screen saving
+xset s off
+xset -dpms
+xset s noblank

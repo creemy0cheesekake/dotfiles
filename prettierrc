@@ -6,11 +6,14 @@
 	"singleQuote": false,
 	"trailingComma": "all",
 	"bracketSpacing": true,
+	"bracketSameLine": true,
 	"arrowParens": "avoid",
-	"overrides": [{
+	"overrides": [
+		{
 			"files": "*.astro",
 			"options": {
 				"parser": "astro"
 			}
-		}]
+		}
+	]
 }

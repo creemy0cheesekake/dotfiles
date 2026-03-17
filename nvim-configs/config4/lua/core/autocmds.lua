@@ -33,6 +33,18 @@ autocmd("FileType", {
 })
 
 autocmd("FileType", {
+	pattern = { "cuda" },
+	callback = function()
+		vim.keymap.set(
+			"n",
+			build_and_run_map,
+			':execute "wa | !nvcc -g %:p -o %:p:h/_%:t:r -lm && exec %:p:h/_%:t:r"<CR>',
+			{ noremap = true }
+		)
+	end,
+})
+
+autocmd("FileType", {
 	pattern = { "tex" },
 	callback = function()
 		vim.keymap.set(

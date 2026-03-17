@@ -26,6 +26,11 @@ local function setups(on_attach, capabilities)
 	lspconfig.clangd.setup({
 		capabilities = capabilities,
 		on_attach = on_attach,
+		-- init_options = {
+		-- 	fallbackFlags = {
+		-- 		"-std=c++20",
+		-- 	},
+		-- },
 		cmd = {
 			"clangd",
 			"--offset-encoding=utf-16",

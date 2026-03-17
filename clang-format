@@ -28,9 +28,9 @@ DerivePointerAlignment: false
 FixNamespaceComments: false 
 IndentAccessModifiers: false
 IndentWidth: 4
-InsertBraces: true
+# InsertBraces: true
 Language: Cpp
-PointerAlignment: Right
+PointerAlignment: Left
 ReflowComments: false
 SortIncludes: false
 SortUsingDeclarations: true

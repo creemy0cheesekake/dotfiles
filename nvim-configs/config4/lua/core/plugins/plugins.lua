@@ -27,6 +27,7 @@ return {
 	require("core.plugins.config.nvim-ts-comment-commentstring"),
 	require("core.plugins.config.nvim-surround"),
 	require("core.plugins.config.commentless"),
+	require("core.plugins.config.vim-indent-object"),
 	-- -------------------------------- Debug ------------------------------- --
 	require("core.plugins.config.mason-nvim-dap"),
 	require("core.plugins.config.nvim-dap"),
