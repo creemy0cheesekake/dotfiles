@@ -1,6 +1,6 @@
 #!/bin/bash
 
-p=$(mpstat | tail -1 | awk '{print $4}' | awk '{print int($1+0.5)}')
+p=$(mpstat 1 1 | tail -1 | awk '{print $3}' | awk '{print int($1+0.5)}')
 
 if [ "$p" -gt 75 ]; then
 	formatted="<fc=red> $p%</fc>"

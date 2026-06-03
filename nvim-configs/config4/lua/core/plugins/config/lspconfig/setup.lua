@@ -1,74 +1,75 @@
-local lspconfig = require("lspconfig")
-
 local function setups(on_attach, capabilities)
-	lspconfig.lua_ls.setup({
-		on_attach = on_attach,
-		capabilities = capabilities,
+	-- Helper to merge capabilities and on_attach into the new config format
+	local function make_config(user_config)
+		return vim.tbl_deep_extend("force", {
+			capabilities = capabilities,
+			-- In 0.12+, we use LspAttach autocmds instead of on_attach,
+			-- but if your setup still requires it, we pass it here:
+			on_attach = on_attach,
+		}, user_config or {})
+	end
 
-		settings = {
-			Lua = {
-				diagnostics = {
-					globals = { "vim" },
-				},
-				workspace = {
-					library = {
-						[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-						[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-						[vim.fn.stdpath("data") .. "/lazy/extensions/nvchad_types"] = true,
-						[vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy"] = true,
+	-- 1. Lua (lua_ls)
+	vim.lsp.config(
+		"lua_ls",
+		make_config({
+			settings = {
+				Lua = {
+					diagnostics = { globals = { "vim" } },
+					workspace = {
+						library = vim.api.nvim_get_runtime_file("", true),
+						checkThirdParty = false,
+						maxPreload = 100000,
+						preloadFileSize = 10000,
 					},
-					maxPreload = 100000,
-					preloadFileSize = 10000,
 				},
 			},
-		},
-	})
-	lspconfig.clangd.setup({
-		capabilities = capabilities,
-		on_attach = on_attach,
-		-- init_options = {
-		-- 	fallbackFlags = {
-		-- 		"-std=c++20",
-		-- 	},
-		-- },
-		cmd = {
-			"clangd",
-			"--offset-encoding=utf-16",
-		},
-	})
-	lspconfig.eslint.setup({
-		capabilities = capabilities,
-		on_attach = on_attach,
-	})
-	lspconfig.jsonls.setup({
-		capabilities = capabilities,
-		on_attach = on_attach,
-	})
-	lspconfig.julials.setup({
-		on_new_config = function(new_config, _)
-			local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
-			if require("lspconfig").util.path.is_file(julia) then
-				vim.notify("Hello!")
-				new_config.cmd[1] = julia
-			end
-		end,
-	})
-	lspconfig.pyright.setup({
-		capabilities = capabilities,
-		on_attach = on_attach,
-	})
-	lspconfig.bashls.setup({
-		capabilities = capabilities,
-		on_attach = on_attach,
-	})
-	lspconfig.emmet_ls.setup({
-		capabilities = capabilities,
-		on_attach = on_attach,
-	})
-	lspconfig.astro.setup({
-		capabilities = capabilities,
-		on_attach = on_attach,
-	})
+		})
+	)
+
+	-- 2. C++ (clangd)
+	vim.lsp.config(
+		"clangd",
+		make_config({
+			cmd = { "clangd", "--offset-encoding=utf-16" },
+		})
+	)
+
+	-- 3. Julia (julials)
+	local julia_bin = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
+	vim.lsp.config(
+		"julials",
+		make_config({
+			cmd = {
+				vim.uv.fs_stat(julia_bin) and julia_bin or "julia",
+				"--startup-file=no",
+				"--history-file=no",
+				"-e",
+				"using LanguageServer; runserver()",
+			},
+		})
+	)
+
+	-- 4. The "Standard" Servers
+	local standard_servers = {
+		"eslint",
+		"jsonls",
+		"pyright",
+		"bashls",
+		"emmet_ls",
+		"astro",
+	}
+
+	for _, server in ipairs(standard_servers) do
+		vim.lsp.config(server, make_config({}))
+	end
+
+	-- CRITICAL: In 0.12, defining a config doesn't start it.
+	-- You must enable them.
+	local all_servers = { "lua_ls", "clangd", "julials", "eslint", "jsonls", "pyright", "bashls", "emmet_ls", "astro" }
+	for _, server in ipairs(all_servers) do
+		vim.lsp.enable(server)
+	end
 end
 
 return { setups = setups }

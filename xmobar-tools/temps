@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cpu_temp=$(sensors | grep "Package id 0" | awk '{print $4}')
+gpu_temp=$(sensors | grep "GPU:" | head -n 1 | awk '{print $2}')
+
+echo "<fc="#7f3333">$cpu_temp 󰢮$gpu_temp</fc>"

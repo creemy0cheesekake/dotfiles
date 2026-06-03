@@ -1,11 +1,11 @@
 local M = {
 	"nvim-telescope/telescope.nvim",
 	branch = "0.1.x",
-	dependencies = { 
-		'nvim-lua/plenary.nvim',
-		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make"},
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
-	}
+	},
 }
 
 function M.config()
@@ -20,9 +20,12 @@ function M.config()
 
 					["<C-n>"] = actions.cycle_history_next,
 					["<C-p>"] = actions.cycle_history_prev,
-				}
-			}
-		}
+				},
+			},
+			preview = {
+				treesitter = false,
+			},
+		},
 	})
 	telescope.load_extension("fzf")
 	local keymap = vim.keymap
@@ -33,4 +36,3 @@ function M.config()
 end
 
 return M
-

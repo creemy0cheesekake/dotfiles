@@ -19,30 +19,30 @@ autocmd("FileType", {
 })
 
 autocmd("FileType", {
-	pattern = { "cpp" },
+	pattern = { "cpp", "cuda" },
 	callback = function()
 		vim.keymap.set("n", build_and_run_map, ':execute "wa | !make"<CR>', { noremap = true })
 	end,
 })
 
 autocmd("FileType", {
-	pattern = { "cpp" },
+	pattern = { "cpp", "cuda" },
 	callback = function()
 		vim.keymap.set("n", build_map, ':execute "wa | !g++ -g %:p -o %:p:h/_%:t:r -lm"', { noremap = true })
 	end,
 })
 
-autocmd("FileType", {
-	pattern = { "cuda" },
-	callback = function()
-		vim.keymap.set(
-			"n",
-			build_and_run_map,
-			':execute "wa | !nvcc -g %:p -o %:p:h/_%:t:r -lm && exec %:p:h/_%:t:r"<CR>',
-			{ noremap = true }
-		)
-	end,
-})
+-- autocmd("FileType", {
+-- 	pattern = { "cuda" },
+-- 	callback = function()
+-- 		vim.keymap.set(
+-- 			"n",
+-- 			build_and_run_map,
+-- 			':execute "wa | !nvcc -g %:p -o %:p:h/_%:t:r -lm && exec %:p:h/_%:t:r"<CR>',
+-- 			{ noremap = true }
+-- 		)
+-- 	end,
+-- })
 
 autocmd("FileType", {
 	pattern = { "tex" },
@@ -71,10 +71,28 @@ autocmd({ "BufNewFile", "BufRead" }, {
 })
 
 -- general
-
 autocmd("BufEnter", {
 	pattern = { "*" },
 	callback = function()
 		vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "white" })
 	end,
 })
+
+-- password protection
+local my_group = vim.api.nvim_create_augroup("ReadOnlyGroup", { clear = true })
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = "*.pwp",
+	group = my_group,
+	callback = function()
+		vim.opt_local.readonly = true
+	end,
+})
+
+-- autocmd("BufEnter", {
+-- :exe "term age -d % > %:r.temp" | startinsert | au TermClose <buffer> exe "bwipe!" | edit %:r.temp
+-- })
+
+-- autocmd("BufEnter", {
+-- :w | exe "term age -p -o %:r.pwp %" | startinsert | au TermClose <buffer> exe "bwipe!" | call delete(expand('%')) | edit %:r.pwp
+-- })

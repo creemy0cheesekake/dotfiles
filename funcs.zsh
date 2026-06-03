@@ -9,6 +9,12 @@ function gdf {
     eval "wget $(echo $url | sed 's/github/raw.githubusercontent/' | sed 's/\/blob//')"
 }
 
+function gfcommit {
+    local file=$1
+	git add "$file"
+	git commit -m "Commited file $file."
+}
+
 function gc {
     local url=$1 two=$2 three=$3
     if [ $# -eq 3 ]; then
@@ -154,4 +160,9 @@ function switchmouse {
 
 function pdf {
 	setsid sioyek "@" 1> /dev/null
+}
+
+function swap_dirs() {
+    local tmp="tmp_swap_$RANDOM"
+    mv "$1" "$tmp" && mv "$2" "$1" && mv "$tmp" "$2"
 }

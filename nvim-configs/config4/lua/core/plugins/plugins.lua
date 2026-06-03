@@ -1,7 +1,6 @@
 return {
 	-- ------------------------------- Themes ------------------------------- --
 	require("core.plugins.config.themer"),
-	-- -------------------------------- Looks ------------------------------- --
 	require("core.plugins.config.treesitter"),
 	-- require("core.plugins.config.devicons"),
 	require("core.plugins.config.indentline"),

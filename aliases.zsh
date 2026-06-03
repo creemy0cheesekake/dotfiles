@@ -36,3 +36,4 @@ alias jpnb="jupyter notebook"
 alias cleansedirname='rename "s/ /_/g"'
 alias cd='z'
 alias cdi='zi'
+alias less='less -RN'

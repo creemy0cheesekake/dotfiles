@@ -3,7 +3,9 @@ local M = {
 }
 
 function M.config()
-	require("ts_context_commentstring").setup({})
+	require("ts_context_commentstring").setup({
+		enable_autocmd = false,
+	})
 end
 
 local original_get_option = vim.filetype.get_option
